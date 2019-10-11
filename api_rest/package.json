@@ -1,0 +1,23 @@
+{
+  "name": "bda_homework_",
+  "version": "1.0.0",
+  "description": "mongodb + nodejs",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Randy Martinez",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/hapi": "^18.4.0",
+    "joi": "^14.3.1",
+    "mongoose": "^5.7.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.3",
+    "nodemon": "^1.18.10"
+  }
+}
