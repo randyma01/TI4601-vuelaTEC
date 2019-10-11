@@ -1,5 +1,5 @@
 {
-  "name": "bda_homework_",
+  "name": "vueltec_server_",
   "version": "1.0.0",
   "description": "mongodb + nodejs",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "start": "nodemon --exec babel-node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Randy Martinez",
+  "author": "Luis, Gustavo, Pablo, Randy",
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^18.4.0",
