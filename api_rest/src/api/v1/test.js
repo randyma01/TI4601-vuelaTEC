@@ -6,7 +6,7 @@ function testRoutes(server) {
     // -- test api -- //
     {
       method: 'GET',
-      path: '/api/v1/test',
+      path: '/test',
       handler: async (request, reply) => {
         return '<h1>test</1>';
       }
@@ -15,7 +15,7 @@ function testRoutes(server) {
     // -- find all students -- //
     {
       method: 'GET',
-      path: '/api/v1/estudiantes/find',
+      path: '/estudiantes/find',
       handler: async (request, reply) => {
         try {
           const person = await Student.find();
@@ -29,7 +29,7 @@ function testRoutes(server) {
     // -- find students by name -- //
     {
       method: 'GET',
-      path: '/api/v1/estudiantes/findOne',
+      path: '/estudiantes/findOne',
       handler: async (request, reply) => {
         try {
           if (request.query) {
@@ -46,11 +46,11 @@ function testRoutes(server) {
     // -- find students by id -- //
     {
       method: 'GET',
-      path: '/api/v1/estudiantes/findById/{id}',
+      path: '/estudiantes/findById/{id}',
       handler: async (request, reply) => {
         try {
           const studentId = request.params.id;
-          const person = await PersonModel.findById(studentId);
+          const person = await Student.findById(studentId);
           return reply.response(person);
         } catch (error) {
           return reply.response(error).code(500);
@@ -61,7 +61,7 @@ function testRoutes(server) {
     // -- insert students -- //
     {
       method: 'POST',
-      path: '/api/v1/estudiantes/insert',
+      path: '/estudiantes/insert',
       options: {
         validate: {
           payload: {
@@ -92,7 +92,7 @@ function testRoutes(server) {
     // -- update students by id -- //
     {
       method: 'PUT',
-      path: '/api/v1/estudiantes/update/{id}',
+      path: '/estudiantes/update/{id}',
       options: {
         validate: {
           payload: {
@@ -122,7 +122,7 @@ function testRoutes(server) {
     // -- delete students by id -- //
     {
       method: 'DELETE',
-      path: '/api/v1/estudiantes/delete/{id}',
+      path: '/estudiantes/delete/{id}',
       handler: async (request, reply) => {
         try {
           const studentId = request.params.id;
@@ -136,7 +136,7 @@ function testRoutes(server) {
     //-----------------//
     /* {
       method: 'GET',
-      path: '/api/v1/usuarios/{nombre?}',
+      path: '/usuarios/{nombre?}',
       handler: async (req, res) => {
         const nombre = req.params.nombre ? req.params.nombre : 'invitado';
         return `Hola ${nombre}!`;
@@ -144,7 +144,7 @@ function testRoutes(server) {
     },
     {
       method: 'POST',
-      path: '/api/v1/usuarios',
+      path: '/usuarios',
       handler: async (req, res) => {
         const newUser = {
           nombre: req.payload.nombre,

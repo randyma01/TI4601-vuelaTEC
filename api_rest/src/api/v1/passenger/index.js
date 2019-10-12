@@ -1,14 +1,24 @@
 import Passengers from '../../../models/passenger';
-import Joi from 'joi';
 
 function PassengersRoutes(server) {
   server.route([
-    // -- test api -- //
     {
       method: 'GET',
-      path: '/api/v1/test',
+      path: '/passengers/test',
       handler: async (request, reply) => {
-        return '<h1>test</1>';
+        return '<h1> passengers waiting </h1>';
+      }
+    },
+    {
+      method: 'GET',
+      path: '/passengers/findAll',
+      handler: async (request, reply) => {
+        try {
+          const person = await Passengers.find();
+          return reply.response(person);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
       }
     }
   ]);

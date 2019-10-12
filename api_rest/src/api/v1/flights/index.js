@@ -1,16 +1,41 @@
 import Flights from '../../../models/flights';
-import Joi from 'joi';
 
 function FlightsRoutes(server) {
   server.route([
-    // -- test api -- //
     {
       method: 'GET',
-      path: '/api/v1/test',
+      path: '/flights/test',
       handler: async (request, reply) => {
-        return '<h1>test</1>';
+        return '<h1> flights standing by! </h1>';
+      }
+    },
+    {
+      method: 'GET',
+      path: '/flights/findAll',
+      handler: async (request, reply) => {
+        try {
+          const flights = await Flights.find();
+          return reply.response(flights);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+    {
+      method: 'GET',
+      path: '/flights/findById/{id}',
+      handler: async (request, reply) => {
+        try {
+          const flightsId = request.params.id;
+          const flights = await Flights.findById(flightsId);
+          return reply.response(flights);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
       }
     }
+    // create a new flight
+    // update an existing flight
   ]);
 }
 

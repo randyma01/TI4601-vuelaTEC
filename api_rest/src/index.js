@@ -1,8 +1,12 @@
 import hapi from '@hapi/hapi';
 import mongoose from 'mongoose';
 
-//const hapi = require('@hapi/hapi');
-
+import administratorRoutes from '../src/api/v1/administrator/index';
+import airlinesRoutes from '../src/api/v1/airlines/index';
+import airportRoutes from '../src/api/v1/airports/index';
+import employeesRoutes from '../src/api/v1/employees/index';
+import flightsRoutes from '../src/api/v1/flights/index';
+import passengerRoutes from '../src/api/v1/passenger/index';
 import testRoutes from '../src/api/v1/test';
 
 const init = async () => {
@@ -15,11 +19,22 @@ const init = async () => {
   });
 
   try {
-    mongoose.connect('mongodb://localhost/testing');
+    mongoose.connect('mongodb://localhost/TECPlane');
     mongoose.connection.once('open', () => {
       console.log('Connection to database: Successful!');
     });
 
+    /* mongoose.connect('mongodb://localhost/testing');
+    mongoose.connection.once('open', () => {
+      console.log('Connection to database: Successful!');
+    }); */
+
+    administratorRoutes(server);
+    airlinesRoutes(server);
+    airportRoutes(server);
+    employeesRoutes(server);
+    flightsRoutes(server);
+    passengerRoutes(server);
     testRoutes(server);
 
     await server.start();

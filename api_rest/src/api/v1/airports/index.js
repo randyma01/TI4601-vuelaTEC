@@ -1,14 +1,37 @@
 import Airports from '../../../models/airports';
-import Joi from 'joi';
 
 function AirportsRoutes(server) {
   server.route([
-    // -- test api -- //
     {
       method: 'GET',
-      path: '/api/v1/test',
+      path: '/airports/test',
       handler: async (request, reply) => {
-        return '<h1>test</1>';
+        return '<h1> airports ready! </h1>';
+      }
+    },
+    {
+      method: 'GET',
+      path: '/airports/findAll',
+      handler: async (request, reply) => {
+        try {
+          const airport = await Airports.find();
+          return reply.response(airport);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+    {
+      method: 'GET',
+      path: '/airports/findById/{id}',
+      handler: async (request, reply) => {
+        try {
+          const airportsId = request.params.id;
+          const airports = await Airports.findById(airportsId);
+          return reply.response(airports);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
       }
     }
   ]);

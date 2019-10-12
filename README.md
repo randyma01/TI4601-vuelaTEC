@@ -1,4 +1,4 @@
-# TI4601-vuelaTEC ✈️
+# TI4601-PlaneTEC ✈️
 
 El código mostrado acontinuación formar parte de curso: TI4601 - Bases de Datos Avanzados.
 

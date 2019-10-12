@@ -24,5 +24,5 @@ const PassengerSchema = new Schema({
   tickets: [TicketSchema]
 });
 
-export default moongoose.model('Ticket', TicketSchema);
+//export default moongoose.model('Ticket', TicketSchema);
 export default mongoose.model('Passenger', PassengerSchema);
