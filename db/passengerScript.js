@@ -1,5 +1,5 @@
 //--- use database ---//
-//use vuelaTEC;
+//use TECPlane;
 
 //--- show database ---//
 db;
