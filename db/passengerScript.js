@@ -19,11 +19,11 @@ db.passengers.insert({
   birthday: ISODate('1995-01-03'),
   country: 'Costa Rica',
   addres: 'Cartago, Cartago, Costa Rica',
-  phone: '09898909',
+  phone: 29898909,
   tickets: [
     {
       amount: 1,
-      seats: 'D02',
+      seats: ['D02'],
       baggage: 1,
       carryOn: 2,
       flight_id: 'AA4573',

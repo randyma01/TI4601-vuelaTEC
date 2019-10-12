@@ -22,6 +22,6 @@ db.flights.insert({
   restrictions: ['weapons', 'foods', 'animals'],
   services: ['dinner', 'breakfast', 'snacks', 'drinks', 'movies'],
   state: 'On Time',
-  capacityPlane: '250',
+  capacityPlane: 250,
   airline_id: 'AAL'
 });
