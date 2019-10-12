@@ -12,7 +12,7 @@ db.createCollection('airlines');
 
 //--- fill collection ---//
 db.airlines.insert({
-  codeOACI: 'AAL',
+  _id: 'AAL',
   name: 'American Airlines',
   countries: [
     'Australia',
@@ -29,7 +29,7 @@ db.airlines.insert({
 });
 
 db.airlines.insert({
-  codeOACI: 'CLH',
+  _id: 'CLH',
   name: 'Lufthansa',
   countries: [
     'Australia',
@@ -45,7 +45,7 @@ db.airlines.insert({
 });
 
 db.airlines.insert({
-  codeOACI: 'SHT',
+  _id: 'SHT',
   name: 'British Airways',
   countries: [
     'Australia',
@@ -62,7 +62,7 @@ db.airlines.insert({
 });
 
 db.airlines.insert({
-  codeOACI: 'UAE',
+  _id: 'UAE',
   name: 'Emirates',
   countries: [
     'Australia',
@@ -77,7 +77,7 @@ db.airlines.insert({
 });
 
 db.airlines.insert({
-  codeOACI: 'JBU',
+  _id: 'JBU',
   name: 'JetBlue',
   countries: [
     'Brasil',
@@ -90,7 +90,7 @@ db.airlines.insert({
 });
 
 db.airlines.insert({
-  codeOACI: 'QTR',
+  _id: 'QTR',
   name: 'Qatar Airways',
   countries: [
     'Australia',

@@ -12,15 +12,16 @@ db.createCollection('flights');
 
 //--- fill collection ---//
 db.flights.insert({
-  flight: 'AU4573',
-  name: 'SydTok',
+  _id: 'AA4573',
+  name: 'AtlTok',
   departure: '19:00',
-  arrives: '23:00',
-  origin: 'Sydney',
+  arrives: '09:00',
+  origin: 'Atlanta',
   destination: 'Tokio',
   price: '$100',
   restrictions: ['weapons', 'foods', 'animals'],
-  services: ['snacks, movies'],
-  state: 'in time',
-  capacityPlane: '250'
+  services: ['dinner', 'breakfast', 'snacks', 'drinks', 'movies'],
+  state: 'On Time',
+  capacityPlane: '250',
+  airline_id: 'AAL'
 });

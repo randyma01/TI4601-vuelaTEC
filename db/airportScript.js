@@ -9,7 +9,7 @@ db.createCollection('airports');
 
 //--- fill collection ---//
 db.airports.insert({
-  codeIATA: 'SJO',
+  _id: 'SJO',
   name: 'Juan Santamaria',
   city: 'San Jose',
   country: 'Costa Rica',
@@ -18,7 +18,7 @@ db.airports.insert({
 });
 
 db.airports.insert({
-  codeIATA: 'LHR',
+  _id: 'LHR',
   name: 'Heathrow',
   city: 'Greater London',
   country: 'United Kingdom',
@@ -27,7 +27,7 @@ db.airports.insert({
 });
 
 db.airports.insert({
-  codeIATA: 'FRA',
+  _id: 'FRA',
   name: 'Frankfurt',
   city: 'Frankfurt',
   country: 'Germany',
@@ -36,7 +36,7 @@ db.airports.insert({
 });
 
 db.airports.insert({
-  codeIATA: 'CAI',
+  _id: 'CAI',
   name: 'El Cairo',
   city: 'Cairo',
   country: 'Egipt',
@@ -45,7 +45,7 @@ db.airports.insert({
 });
 
 db.airports.insert({
-  codeIATA: 'HND',
+  _id: 'HND',
   name: 'Haneda',
   city: 'Tokio',
   country: 'Japan',
@@ -54,7 +54,7 @@ db.airports.insert({
 });
 
 db.airports.insert({
-  codeIATA: 'GIG',
+  _id: 'GIG',
   name: 'Galeão',
   city: 'Rio de Janeiro',
   country: 'Brasil',
@@ -63,7 +63,7 @@ db.airports.insert({
 });
 
 db.airports.insert({
-  codeIATA: 'DXB',
+  _id: 'DXB',
   name: 'Dubai',
   city: 'Dubai',
   country: 'United Arab Emirates',
@@ -72,7 +72,7 @@ db.airports.insert({
 });
 
 db.airports.insert({
-  codeIATA: 'SYD',
+  _id: 'SYD',
   name: 'Kingsford Smith',
   city: 'Sydney',
   country: 'Australia',
@@ -81,7 +81,7 @@ db.airports.insert({
 });
 
 db.airports.insert({
-  codeIATA: 'ATL',
+  _id: 'ATL',
   name: ' Hartsfield-Jackson',
   city: 'Atlanta',
   country: 'United States',
@@ -90,7 +90,7 @@ db.airports.insert({
 });
 
 db.airports.insert({
-  codeIATA: 'AUA',
+  _id: 'AUA',
   name: ' Reina Beatriz ',
   city: 'Oranjestad',
   country: 'Aruba',

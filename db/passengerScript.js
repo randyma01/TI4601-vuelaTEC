@@ -8,14 +8,27 @@ db;
 
 //--- create collections ---//
 
-db.createCollection('passangers');
+db.createCollection('passengers');
 
 //--- fill collection ---//
-db.passangers.insert({
-  firstName: 'Raquel',
-  lastName: 'Villalobos',
-  birthday: '4-12-1996',
+db.passengers.insert({
+  firstName: 'Daniela',
+  lastName: 'Solis',
+  username: 'danisols',
+  password: 'QeKl503',
+  birthday: ISODate('1995-01-03'),
   country: 'Costa Rica',
-  phones: [5748395, 2348504],
-  email: 'raqvilar@gmail.com'
+  addres: 'Cartago, Cartago, Costa Rica',
+  phone: '09898909',
+  tickets: [
+    {
+      amount: 1,
+      seats: 'D02',
+      baggage: 1,
+      carryOn: 2,
+      flight_id: 'AA4573',
+      checked: false,
+      used: false
+    }
+  ]
 });
