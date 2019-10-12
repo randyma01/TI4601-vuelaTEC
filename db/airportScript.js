@@ -1,5 +1,5 @@
 //--- use database ---//
-//use vueltaTEC;
+//use vuelaTEC;
 
 //--- show database ---//
 db;

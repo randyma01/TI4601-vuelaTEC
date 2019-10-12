@@ -1,5 +1,5 @@
 //--- use database ---//
-//use vueltaTEC;
+//use vuelaTEC;
 
 //--- show database ---//
 db;
@@ -8,7 +8,6 @@ db;
 db.createCollection('employees');
 
 //--- fill collection ---//
-
 db.employees.insert({
   firstName: 'Camila',
   lastName: 'Murrillo',

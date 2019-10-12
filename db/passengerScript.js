@@ -1,13 +1,10 @@
 //--- use database ---//
-
-//use vueltaTEC;
+//use vuelaTEC;
 
 //--- show database ---//
-
 db;
 
 //--- create collections ---//
-
 db.createCollection('passengers');
 
 //--- fill collection ---//
