@@ -9,6 +9,7 @@ db.createCollection('employees');
 
 //--- fill collection ---//
 db.employees.insert({
+  _id: 657483056,
   firstName: 'Camila',
   lastName: 'Murrillo',
   username: 'cammu',
@@ -18,6 +19,7 @@ db.employees.insert({
 });
 
 db.employees.insert({
+  _id: 2483429504,
   firstName: 'Andrea',
   lastName: 'Retana',
   username: 'andret',
@@ -28,6 +30,7 @@ db.employees.insert({
 });
 
 db.employees.insert({
+  _id: 1163428574,
   firstName: 'Ilana',
   lastName: 'Chavarria',
   username: 'ilchav',
@@ -38,6 +41,7 @@ db.employees.insert({
 });
 
 db.employees.insert({
+  _id: 3547318409,
   firstName: 'Jorge',
   lastName: 'Lizano',
   username: 'jgliz',
@@ -48,6 +52,7 @@ db.employees.insert({
 });
 
 db.employees.insert({
+  _id: 45647329,
   firstName: 'Paul',
   lastName: 'Greenwood',
   username: 'plfw',

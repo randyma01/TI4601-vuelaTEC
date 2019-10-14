@@ -9,9 +9,11 @@ db.createCollection('passengers');
 
 //--- fill collection ---//
 db.passengers.insert({
+  _id: '123454325',
   firstName: 'Daniela',
   lastName: 'Solis',
   username: 'danisols',
+  email: 'danisols@email.com',
   password: 'QeKl503',
   birthday: ISODate('1995-01-03'),
   country: 'Costa Rica',

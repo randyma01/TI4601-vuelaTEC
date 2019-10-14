@@ -13,6 +13,7 @@ const TicketSchema = new Schema({
 });
 
 const PassengerSchema = new Schema({
+  _id: Number,
   firstName: String,
   lastName: String,
   username: String,
