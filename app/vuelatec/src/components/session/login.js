@@ -3,7 +3,7 @@ import { Form, Button, Container, Col, Row } from 'react-bootstrap';
 
 import Menu from '../menu';
 import SignUp from './signup';
-
+import Logo from '../../images/iconVuelaTEC.jpg';
 
 class LogIn extends React.Component {
   constructor(props) {
@@ -36,7 +36,7 @@ class LogIn extends React.Component {
   };
 
   _submitData = async () => {
-    this.setState({ 
+    this.setState({
       isLoading: true
     });
   };
@@ -57,7 +57,9 @@ class LogIn extends React.Component {
     else {
       return (
         <Container>
-          <h1 align='center' style={{ marginTop: '4%' }}>VuelaTEC</h1>
+          <div style={{ margin: '4%' }}>
+            <img style={{ marginLeft: '20%' }} src={Logo} alt="logo.png"></img>
+          </div>
           <Row className='justify-content-md-center' style={{ marginTop: '3%' }}>
             <Col md='auto'>
               <Form>

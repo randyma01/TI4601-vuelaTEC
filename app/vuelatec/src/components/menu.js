@@ -43,7 +43,7 @@ class Menu extends React.Component {
                       </Navbar>
                     </div>
                     <div className="col-md-auto">
-                      <a href="http://localhost:3000">Cerrar Sesion</a>
+                      <a href="http://localhost:8080">Cerrar Sesion</a>
                     </div>
                   </div>
                 </header>
