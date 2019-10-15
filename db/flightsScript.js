@@ -16,10 +16,11 @@ db.flights.insert({
   arrives: '09:00',
   origin: 'Atlanta',
   destination: 'Tokio',
-  price: '$100',
+  price: 100,
   restrictions: ['weapons', 'foods', 'animals'],
   services: ['dinner', 'breakfast', 'snacks', 'drinks', 'movies'],
   state: 'On Time',
   capacityPlane: 250,
+  ticketsSold: 4,
   airline_id: 'AAL'
 });

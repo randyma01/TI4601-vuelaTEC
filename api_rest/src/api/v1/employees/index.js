@@ -15,7 +15,7 @@ function EmployeesRoutes(server) {
       path: '/employees/findAll',
       handler: async (request, reply) => {
         try {
-          const person = await Employee.find();
+          const person = await Employee.find({ firstName: 'Camila' });
           return reply.response(person);
         } catch (error) {
           return reply.response(error).code(500);

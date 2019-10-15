@@ -9,11 +9,12 @@ const FlightSchema = new Schema({
   arrives: String,
   origin: String,
   destination: String,
-  price: String,
+  price: Number,
   restrictions: [String],
   services: [String],
   state: String,
   capacity: Number,
+  ticketsSold: Number,
   airline_id: String
 });
 
