@@ -74,6 +74,16 @@ db.passengers.insert({
       flight_id: 'AA4573',
       checked: false,
       used: false
+    },
+    {
+      _id: 'dua432',
+      amount: 1,
+      seats: ['F01'],
+      baggage: 2,
+      carryOn: 2,
+      flight_id: 'DU1289',
+      checked: false,
+      used: false
     }
   ]
 });

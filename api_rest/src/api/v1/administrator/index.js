@@ -115,7 +115,14 @@ function AdministratorRoute(server) {
     el vuelo que menos boletos compró, adquirió uno y en el que más boletos compró, 
     adquirió tres, entonces su rango será [1,3]
 
-    db.employees.
+    db.passengers.find(
+      {
+      "_id":"157483924"
+      },
+      {
+        "tickets.amount":1, "tickets._id":1, "tickets.flight_id":1
+      }
+      ).pretty()
 
 
 

@@ -40,3 +40,19 @@ db.flights.insert({
   ticketsSold: 6,
   airline_id: 'SHT'
 });
+
+db.flights.insert({
+  _id: 'DU1289',
+  name: 'DuUs',
+  departure: '10:00',
+  arrives: '09:00',
+  origin: 'Dubai',
+  destination: 'Atlanta',
+  price: 140,
+  restrictions: ['weapons', 'foods', 'animals', 'plants'],
+  services: ['lunch', 'snacks', 'drinks', 'movies'],
+  state: 'On Time',
+  capacityPlane: 450,
+  ticketsSold: 120,
+  airline_id: 'UAE'
+});
