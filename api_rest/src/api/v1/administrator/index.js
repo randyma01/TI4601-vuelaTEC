@@ -71,8 +71,8 @@ function AdministratorRoute(server) {
               $group: {
                 _id: {
                   airline: '$airline_id',
-                  tickets: '$ticketsSold',
-                  total: '$capacityPlane',
+                  ticketsSold: '$ticketsSold',
+                  capacityPlane: '$capacityPlane',
                   profit: {
                     $sum: {
                       $multiply: ['$price', '$ticketsSold']
@@ -101,7 +101,7 @@ function AdministratorRoute(server) {
         {
           $group: 
           {
-            _id: { airline: "$airline_id", tickets: "$ticketsSold", total: "$capacityPlane" },
+            _id: { airline: "$airline_id", ticketsSold: "$ticketsSold", capacityPlane: "$capacityPlane" },
           profit: { $sum: {$multiply: ["$price", "$ticketsSold"]}}
           }
         }
@@ -114,6 +114,11 @@ function AdministratorRoute(server) {
     Por ejemplo, si Ana ha comprado boletos para 5 vuelos, y se identifica que en 
     el vuelo que menos boletos compró, adquirió uno y en el que más boletos compró, 
     adquirió tres, entonces su rango será [1,3]
+
+    db.employees.
+
+
+
 
     3. ¿Cuáles son las destinos más visitados? Se debe mostrar el nombre de
     cada destino y la cantidad de pasajero que han comprado vuelos

@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const TicketSchema = new Schema({
+  _id: String,
   amount: Number,
   seats: [String],
   bagagge: Number,
