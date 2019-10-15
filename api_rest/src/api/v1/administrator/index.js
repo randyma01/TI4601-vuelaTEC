@@ -60,6 +60,33 @@ function AdministratorRoute(server) {
           return reply.response(error).code(500);
         }
       }
+    },
+    {
+      method: 'GET',
+      path: '/admin/flights/info',
+      handler: async (request, reply) => {
+        try {
+          const airlines = await Flights.aggregate([
+            {
+              $group: {
+                _id: {
+                  airline: '$airline_id',
+                  tickets: '$ticketsSold',
+                  total: '$capacityPlane',
+                  profit: {
+                    $sum: {
+                      $multiply: ['$price', '$ticketsSold']
+                    }
+                  }
+                }
+              }
+            }
+          ]);
+          return reply.response(airlines);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
     }
 
     /* 
