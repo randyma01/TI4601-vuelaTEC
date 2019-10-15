@@ -21,8 +21,7 @@ db.flights.aggregate([
     el vuelo que menos boletos compró, adquirió uno y en el que más boletos compró, 
     adquirió tres, entonces su rango será [1,3] */
 
-db.passengers
-  .find(
+db.passengers.find(
     {
       _id: '157483924'
     },
@@ -31,8 +30,32 @@ db.passengers
       'tickets._id': 1,
       'tickets.flight_id': 1
     }
-  )
-  .pretty();
+  ).pretty();
+
+db.passengers.aggregate([
+    {
+      $group: {
+        _id: {
+          idPerson: '$_id',
+          ticketsId: '$tickets._id',
+          flightID: '$tickets.flight_id'
+        },
+        minTickets: { $min: '$tickets.amount' },
+        maxTickets: { $max: '$tickets.amount' }
+      }
+    }
+  ]).limit(1).pretty();
+
+  db.passengers.aggregate([
+   { 
+     $project: 
+    { 
+      idFlight: {"tickets.flight_id": 1},
+      minTickets: { $min: "$tickets.amount"}, 
+      maxTickets: { $max: "$tickets.amount" }, 
+    } 
+   }
+  ]).pretty()
 
 /* 3. ¿Cuáles son las destinos más visitados? Se debe mostrar el nombre de
     cada destino y la cantidad de pasajero que han comprado vuelos

@@ -5,6 +5,7 @@
 /*  3. Ejecutar función de abordaje. */
 
 /* 4. Ejecutar los siguientes reportes: */
+
 /* 4.1 Consultar información de un pasajero. */
 
 /* 4.1 Vuelos registrados en el sistema: se muestra un listado con la 
