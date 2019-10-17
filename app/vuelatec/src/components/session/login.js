@@ -4,6 +4,7 @@ import { Form, Button, Container, Col, Row } from 'react-bootstrap';
 import Menu from '../menu';
 import SignUp from './signup';
 import Logo from '../../images/iconVuelaTEC.jpg';
+import SimpleCrypto from 'simple-crypto-js';
 
 class LogIn extends React.Component {
   constructor(props) {
@@ -11,16 +12,17 @@ class LogIn extends React.Component {
     this.state = {
       isLoading: false,
       isCreateAccount: false,
-      name: '',
+      userName: '',
       password: '',
-      dataUser: []
+      dataUser: [],
+      messageError: ''
     };
 
   }
 
   _onSearchUser = event => {
     this.setState({
-      name: event.target.value
+      userName: event.target.value
     });
   };
 
@@ -30,18 +32,31 @@ class LogIn extends React.Component {
     });
   };
 
-
   _onSignUpPressed = () => {
     this.setState({ isCreateAccount: true })
   };
 
   _submitData = async () => {
-    this.setState({
-      isLoading: true
-    });
+    if (await this._verifyData() == 0) {
+      this.setState({
+        isLoading: true,
+        messageError: ''
+      });
+    }
+    else {
+      this.setState({
+        messageError: 'El nombre de usuario o contraseña son invalidos, por favor verifique.'
+      })
+    }
   };
 
-
+  _verifyData = async () => {
+    const passwordDB = '12345' //TODO GET Password from databse where userName==this.state.userName
+    const simpleCrypto = new SimpleCrypto('vtecAPP');
+    const passwordEncrypt = simpleCrypto.encrypt(passwordDB); //DELETE
+    const passwordDecrypt = simpleCrypto.decrypt(passwordEncrypt);
+    return this.state.password.localeCompare(passwordDecrypt)
+  }
 
   render() {
     if (this.state.isLoading) {
@@ -67,9 +82,9 @@ class LogIn extends React.Component {
                   <Form.Label>Usuario</Form.Label>
                   <Form.Control
                     type='string'
-                    placeholder='e.g. farmatec.19'
+                    placeholder='Nombre de usuario'
                     onChange={this._onSearchUser}
-                    value={this.state.name}
+                    value={this.state.userName}
                   />
                 </Form.Group>
                 <Form.Group controlId='formBasicPassword' style={{ marginTop: '3%' }}>
@@ -83,6 +98,11 @@ class LogIn extends React.Component {
                 </Form.Group>
               </Form>
             </Col>
+          </Row>
+          <Row className='justify-content-md-center' style={{ margin: '2%' }}>
+            <div>
+              <p style={{ color: 'red' }}>{this.state.messageError}</p>
+            </div>
           </Row>
           <Row className='justify-content-md-center' style={{ marginTop: '3%' }}>
             <div >
