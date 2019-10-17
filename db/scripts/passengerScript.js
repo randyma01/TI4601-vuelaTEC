@@ -9,7 +9,7 @@ db.createCollection('passengers');
 
 //--- fill collection ---//
 db.passengers.insert({
-  _id: '123454325',
+  _id: 123454325,
   firstName: 'Giovanni',
   lastName: 'Rodriguez',
   username: 'danisols',
@@ -22,7 +22,7 @@ db.passengers.insert({
 });
 
 db.passengers.insert({
-  _id: '157483924',
+  _id: 157483924,
   firstName: 'Laurel',
   lastName: 'Smith',
   username: 'yanny',

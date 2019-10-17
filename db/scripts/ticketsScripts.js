@@ -15,7 +15,7 @@ db.tickets.insert({
   baggage: 1,
   carryOn: 2,
   flight_id: 'AA4573',
-  passengers_id: '123454325',
+  passenger_id: 123454325,
   checked: false,
   used: false
 });
@@ -27,32 +27,32 @@ db.tickets.insert({
   baggage: 5,
   carryOn: 2,
   flight_id: 'AA4573',
-  passengers_id: '123454325',
+  passenger_id: 123454325,
   checked: false,
   used: false
 });
 
 //---//
 db.tickets.insert({
-  _id: 'sht123',
+  _id: 'sht125',
   amount: 3,
   seats: ['E01', 'E02', 'E03'],
   baggage: 3,
   carryOn: 3,
   flight_id: 'AA4573',
-  passengers_id: '157483924',
+  passenger_id: 157483924,
   checked: false,
   used: false
 });
 
 db.tickets.insert({
-  _id: 'ktl123',
+  _id: 'hgn135',
   amount: 2,
   seats: ['G02', 'G03'],
   baggage: 2,
   carryOn: 1,
   flight_id: 'AA4573',
-  passengers_id: '157483924',
+  passenger_id: 157483924,
   checked: false,
   used: false
 });
@@ -64,7 +64,7 @@ db.tickets.insert({
   baggage: 2,
   carryOn: 2,
   flight_id: 'DU1289',
-  passengers_id: '157483924',
+  passenger_id: 157483924,
   checked: false,
   used: false
 });

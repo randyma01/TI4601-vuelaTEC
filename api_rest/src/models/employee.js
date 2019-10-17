@@ -9,7 +9,7 @@ const EmployeeSchema = new Schema({
   username: String,
   password: String,
   role: String,
-  initalDate: String
+  initalDate: Date
 });
 
 export default mongoose.model('Employee', EmployeeSchema);
