@@ -8,6 +8,6 @@
 
 /* 4.1 Consultar información de un pasajero. */
 
-/* 4.1 Vuelos registrados en el sistema: se muestra un listado con la 
+/* 4.2 Vuelos registrados en el sistema: se muestra un listado con la 
     información de los vuelos registrados. Se puede filtrar por rango de fechas, 
     por estado, por nombre de pasajero. Para cada vuelo se debe mostrar el detalle. */

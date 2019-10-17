@@ -32,25 +32,10 @@ db.passengers.find(
     }
   ).pretty();
 
-db.passengers.aggregate([
-    {
-      $group: {
-        _id: {
-          idPerson: '$_id',
-          ticketsId: '$tickets._id',
-          flightID: '$tickets.flight_id'
-        },
-        minTickets: { $min: '$tickets.amount' },
-        maxTickets: { $max: '$tickets.amount' }
-      }
-    }
-  ]).limit(1).pretty();
-
   db.passengers.aggregate([
    { 
      $project: 
     { 
-      idFlight: {"tickets.flight_id": 1},
       minTickets: { $min: "$tickets.amount"}, 
       maxTickets: { $max: "$tickets.amount" }, 
     } 
@@ -61,7 +46,42 @@ db.passengers.aggregate([
     cada destino y la cantidad de pasajero que han comprado vuelos
     para ese destino. */
 
+  db.passengers.find(
+    {
+      _id: '157483924'
+    },
+    {
+      'tickets.amount': 1,
+      'tickets._id': 1,
+      'tickets.flight_id': 1
+    }
+  ).pretty();
+
 /* 4. Cantidad de operaciones de compra de boletos registradas en el sistema, 
     esta información se puede filtrar por pasajero, por rango de fechas, 
     por estado de vuelo. También mostrar los tres pasajeros
     con más vuelos adquiridos.  */
+
+    /* 4.1 Cantidad de boletos por pasajero */
+    
+   db.passengers.aggregate(
+      {
+        $match: {
+        _id: "157483924"
+        }
+      },
+      {
+        $unwind: "$tickets"
+      },
+      {
+        $group: {
+          _id: "$tickets.amount",
+          ticketsBought: {$sum: 1}
+        }
+      }
+    ).pretty()
+
+    db.collection.aggregate( [
+   { $count: "myCount" }
+])
+    
