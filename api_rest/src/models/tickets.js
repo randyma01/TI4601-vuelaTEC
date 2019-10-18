@@ -11,7 +11,7 @@ const TicketSchema = new Schema({
   flight_id: String,
   passenger_id: Number,
   checked: Boolean,
-  used: Boolean
+  boarded: Boolean
 });
 
 export default moongoose.model('Ticket', TicketSchema);
