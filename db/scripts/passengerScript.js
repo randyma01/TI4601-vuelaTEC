@@ -12,12 +12,12 @@ db.passengers.insert({
   _id: 123454325,
   firstName: 'Giovanni',
   lastName: 'Rodriguez',
-  username: 'danisols',
-  email: 'danisols@email.com',
+  username: 'giorod',
+  email: 'giorods@email.com',
   password: 'QeKl503',
   birthday: ISODate('1995-01-03'),
   country: 'Costa Rica',
-  addres: 'Cartago, Cartago, Costa Rica',
+  address: 'Cartago, Cartago, Costa Rica',
   phone: 29898909
 });
 
@@ -30,6 +30,6 @@ db.passengers.insert({
   password: 'QeKl503',
   birthday: ISODate('1997-03-08'),
   country: 'England',
-  addres: 'Small Heath, Birmingham, England',
+  address: 'Small Heath, Birmingham, England',
   phone: 89957392
 });

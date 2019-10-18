@@ -17,7 +17,8 @@ db.tickets.insert({
   flight_id: 'AA4573',
   passenger_id: 123454325,
   checked: false,
-  boarded: false
+  boarded: false,
+  dateBought: '12-03-2019'
 });
 
 db.tickets.insert({
@@ -29,7 +30,8 @@ db.tickets.insert({
   flight_id: 'AA4573',
   passenger_id: 123454325,
   checked: false,
-  boarded: false
+  boarded: false,
+  dateBought: '12-05-2019'
 });
 
 //---//
@@ -42,7 +44,8 @@ db.tickets.insert({
   flight_id: 'AA4573',
   passenger_id: 157483924,
   checked: false,
-  boarded: false
+  boarded: false,
+  dateBought: '15-03-2019'
 });
 
 db.tickets.insert({
@@ -54,7 +57,8 @@ db.tickets.insert({
   flight_id: 'AA4573',
   passenger_id: 157483924,
   checked: false,
-  boarded: false
+  boarded: false,
+  dateBought: '18-06-2019'
 });
 
 db.tickets.insert({
@@ -66,5 +70,6 @@ db.tickets.insert({
   flight_id: 'DU1289',
   passenger_id: 157483924,
   checked: false,
-  boarded: false
+  boarded: false,
+  dateBought: '12-12-2019'
 });

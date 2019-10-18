@@ -15,7 +15,7 @@ db.employees.insert({
   username: 'cammu',
   password: 'oRf5',
   role: 'administrator',
-  initalDate: '2010-03-05'
+  initalDate: '04-03-2010'
 });
 
 db.employees.insert({
@@ -26,7 +26,7 @@ db.employees.insert({
   password: 'aNY6',
   role: 'operator',
   area: 'counter',
-  initalDate: '2010-03-05'
+  initalDate: '14-07-2011'
 });
 
 db.employees.insert({
@@ -37,7 +37,7 @@ db.employees.insert({
   password: 'lYC7',
   role: 'operator',
   area: 'boarding',
-  initalDate: '2016-04-02'
+  initalDate: '23-05-2015'
 });
 
 db.employees.insert({
@@ -48,7 +48,7 @@ db.employees.insert({
   password: 'jlis',
   role: 'technician',
   area: 'load',
-  initalDate: '2012-07-10'
+  initalDate: '03-12-2008'
 });
 
 db.employees.insert({
@@ -59,5 +59,5 @@ db.employees.insert({
   password: 'GfP9',
   role: 'technician',
   area: 'maintenance',
-  initalDate: '2012-07-10'
+  initalDate: '07-02-2013'
 });
