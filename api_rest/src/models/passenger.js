@@ -11,8 +11,7 @@ const PassengerSchema = new Schema({
   birthday: String,
   country: String,
   address: String,
-  phone: Number,
-  tickets: [TicketSchema]
+  phone: Number
 });
 
 export default mongoose.model('Passenger', PassengerSchema);

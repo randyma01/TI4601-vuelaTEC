@@ -19,7 +19,7 @@ db.flights.insert({
   price: 100,
   restrictions: ['weapons', 'foods', 'animals'],
   services: ['dinner', 'breakfast', 'snacks', 'drinks', 'movies'],
-  state: 'On Time',
+  state: 'OnTime',
   capacityPlane: 250,
   ticketsSold: 4,
   airline_id: 'AAL'
@@ -35,7 +35,7 @@ db.flights.insert({
   price: 35,
   restrictions: ['weapons', 'foods', 'animals'],
   services: ['snacks', 'drinks', 'movies'],
-  state: 'On Time',
+  state: 'OnTime',
   capacityPlane: 150,
   ticketsSold: 6,
   airline_id: 'SHT'
@@ -51,7 +51,7 @@ db.flights.insert({
   price: 140,
   restrictions: ['weapons', 'foods', 'animals', 'plants'],
   services: ['lunch', 'snacks', 'drinks', 'movies'],
-  state: 'On Time',
+  state: 'OnTime',
   capacityPlane: 450,
   ticketsSold: 120,
   airline_id: 'UAE'

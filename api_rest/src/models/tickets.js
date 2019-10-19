@@ -14,4 +14,4 @@ const TicketSchema = new Schema({
   boarded: Boolean
 });
 
-export default moongoose.model('Ticket', TicketSchema);
+export default mongoose.model('Ticket', TicketSchema);
