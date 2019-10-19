@@ -102,7 +102,7 @@ function AdministratorRoute(server) {
           const ticketsByPassenger = await Tickets.aggregate([
             {
               $match: {
-                passenger_id: { passengerId }
+                passenger_id: passengerId
               }
             },
             {
