@@ -1,5 +1,13 @@
 /* 1. Verificar información de check-in. */
  
+db.tickets.find(
+    { 
+        'used': 
+        { 
+            $exists: false 
+        } 
+});
+
 /* 2. Consultar información de pasajeros. */
 
 // filtro: por id de pasajero
