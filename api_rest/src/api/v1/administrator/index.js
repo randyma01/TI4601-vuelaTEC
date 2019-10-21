@@ -1,4 +1,3 @@
-import Employee from '../../../models/employee';
 import Airlines from '../../../models/airlines';
 import Flights from '../../../models/flights';
 import Tickets from '../../../models/tickets';
@@ -9,7 +8,7 @@ function AdministratorRoute(server) {
       method: 'GET',
       path: '/admin/test',
       handler: async (request, reply) => {
-        return '<h1> employees working! </h1>';
+        return '<h1> admin working! </h1>';
       }
     },
     {
@@ -98,7 +97,7 @@ function AdministratorRoute(server) {
       path: '/admin/rangeTicketsPassengers/{id}',
       handler: async (request, reply) => {
         try {
-          const passengerId = request.params;
+          const passengerId = parseInt(request.params.id);
           const ticketsByPassenger = await Tickets.aggregate([
             {
               $match: {
@@ -123,12 +122,18 @@ function AdministratorRoute(server) {
     // 3. -- most visited destinations
     {
       method: 'GET',
-      path: '/admin/mostVisitDestinations/',
+      path: '/admin/mostVisitedDestinations/',
       handler: async (request, reply) => {
         try {
-          const passengerId = request.params.id;
-
-          return reply.response(flights);
+          const mostVisited = await Tickets.aggregate([
+            {
+              $group: {
+                _id: null,
+                maxQuantity: { $max: '$ticketsSold' }
+              }
+            }
+          ]);
+          return reply.response(mostVisited);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -138,12 +143,26 @@ function AdministratorRoute(server) {
     // 4.1 -- total amount of ticket per passengers general
     {
       method: 'GET',
-      path: '/admin/ticketsPassenger/',
+      path: '/admin/ticketsPassengers/{id}',
       handler: async (request, reply) => {
         try {
-          const passengerId = request.params.id;
-
-          return reply.response(flights);
+          const passengerId = parseInt(request.params.id);
+          const amountTicketsPassengers = await Tickets.aggregate([
+            {
+              $match: {
+                passenger_id: passengerId
+              }
+            },
+            {
+              $group: {
+                _id: '$passengerId',
+                totalTickets: {
+                  $sum: '$amount'
+                }
+              }
+            }
+          ]);
+          return reply.response(amountTicketsPassengers);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -153,12 +172,27 @@ function AdministratorRoute(server) {
     // 4.2 -- total amount of ticket per passengers by dates
     {
       method: 'GET',
-      path: '/admin/ticketsPassengerDates/{id}',
+      path: '/admin/ticketsPassengerDates/{date}',
       handler: async (request, reply) => {
         try {
-          const passengerId = request.params.id;
-
-          return reply.response(flights);
+          const date = request.params.date;
+          const amountTicketsPassengers = await Tickets.aggregate([
+            {
+              $match: {
+                dateBought: date
+              }
+            },
+            {
+              $group: {
+                _id: '$passengerId',
+                totalTickets: {
+                  $sum: '$amount'
+                }
+              }
+            }
+          ]);
+          return date;
+          return reply.response(amountTicketsPassengers);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -168,17 +202,27 @@ function AdministratorRoute(server) {
     // 4.3 -- total amount of ticket per passengers by state
     {
       method: 'GET',
-      path: '/admin/ticketsPassengerState/{state}',
+      path: '/admin/ticketsPassengerState/{id}',
       handler: async (request, reply) => {
         try {
-          const state = request.params.state;
-          if (state === 'OnTime') {
-            //return '<h1> On Time <h1>';
-          } else if (stare === 'Delayed') {
-            //return '<h1> Delayed <h1>';
-          } else {
-            //return '<h1> Cancel <h1>';
-          }
+          const passengerId = parseInt(request.params.state);
+          const amountTicketsPassengers = await Tickets.aggregate([
+            {
+              $match: {
+                passenger_id: passengerId,
+                used: false
+              }
+            },
+            {
+              $group: {
+                _id: null,
+                totalTickets: {
+                  $sum: '$amount'
+                }
+              }
+            }
+          ]);
+          return reply.response(amountTicketsPassengers);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -186,12 +230,24 @@ function AdministratorRoute(server) {
     },
 
     // 4.4 -- top three passangers with most flights
-
     {
       method: 'GET',
       path: '/admin/topThreePassengers/',
       handler: async (request, reply) => {
         try {
+          const topThreePassengers = await Tickets.aggregate([
+            {
+              $group: {
+                _id: '$passenger_id',
+                maxQuantity: { $max: '$amount' }
+              }
+            },
+            {
+              $limit: 3
+            }
+          ]);
+
+          return reply.response(topThreePassengers);
         } catch (error) {
           return reply.response(error).code(500);
         }

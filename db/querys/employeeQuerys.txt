@@ -43,22 +43,23 @@ db.tickets.update(
 
     /* 4.1 Consultar información de un pasajero. */
 
-    db.passengers.aggregate([
-    {
-       $match: 
+    db.passengers.aggregate(
+    [
         {
-            _id: 123454325
-        } 
-    },
-    {
-        $lookup:
+        $match: 
+            {
+                _id: 123454325
+            } 
+        },
         {
-            from: 'tickets',
-            localField: '_id',
-            foreignField: 'passenger_id',
-            as: 'ticketsInfo'
+            $lookup:
+            {
+                from: 'tickets',
+                localField: '_id',
+                foreignField: 'passenger_id',
+                as: 'ticketsInfo'
+            }
         }
-    }
     ]).pretty()
     
 
@@ -70,32 +71,9 @@ db.tickets.update(
         
         db.flights.find().pretty()
         
-        /* 4.2.1 Listado de todos los vuelos en el sistema por fechas */
+        /* 4.2.2 Listado de todos los vuelos en el sistema por fechas, estado y nombre pasajero */
 
-        /* 4.2.1 Listado de todos los vuelos en el sistema por nombre de estado */
-         
-         // filtro: en tiempo
-         db.flights.find(
-            {
-                 "state": "On Time"
-            }
-         )
-
-         // filtro: en atrasados
-         db.flights.find(
-            {
-                 "state": "Delayed"
-            }
-         )
-
-         // filtro: en cancelado
-         db.flights.find(
-            {
-                 "state": "Cancel"
-            }
-         )
-
-        /* 4.2.1 Listado de todos los vuelos en el sistema por nombre de pasajero */
+        /* 4.2.3 Listado de todos los vuelos en el sistema por nombre de pasajero */
 
 
 

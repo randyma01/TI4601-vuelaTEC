@@ -35,7 +35,7 @@ db.tickets.aggregate(
   {
     $match:
     { 
-      passenger_id : 123454325
+      passenger_id : '157483924'
     } 
   },
   {
@@ -54,7 +54,7 @@ db.tickets.aggregate(
   {
     $group:
       {
-        _id: "$passenger_id",
+        _id: '$passenger_id',
         minQuantity: { $min: '$amount' },
         maxQuantity: { $max: '$amount' }
       }
@@ -66,6 +66,17 @@ db.tickets.aggregate(
     cada destino y la cantidad de pasajero que han comprado vuelos
     para ese destino. */
 
+  // sin filtro: todos los vuelos
+  db.flights.aggregate(
+  [
+    {
+      $group:
+        {
+          _id: '$destination',
+          maxQuantity: { $max: '$ticketsSold' }
+        }
+    }
+  ]);
 
 
 /* 4. Cantidad de operaciones de compra de boletos registradas en el sistema, 
@@ -86,7 +97,7 @@ db.tickets.aggregate(
       },
       {
         $group: {
-          _id : 'passenger_id',
+          _id : '$passenger_id',
           totalTickets: 
             {
               $sum: '$amount'
@@ -96,6 +107,25 @@ db.tickets.aggregate(
     ])
 
     /* 4.2 Cantidad de boletos por pasajero por fecha */
+  // filtro: por id de pasajero
+    db.tickets.aggregate(
+    [
+      {
+        $match:
+          { 
+          dateBought : '12-03-2019'
+          } 
+      },
+      {
+        $group: {
+          _id : '$passenger_id',
+          totalTickets: 
+            {
+              $sum: '$amount'
+            }
+        }
+      }
+    ])
 
     /* 4.3 Cantidad de boletos por pasajero por estado de vuelo */
 
@@ -111,7 +141,7 @@ db.tickets.aggregate(
       },
       {
         $group: {
-          _id : 'passenger_id',
+          _id : '$passenger_id',
           totalTickets: 
             {
               $sum: '$amount'
@@ -121,4 +151,17 @@ db.tickets.aggregate(
     ])
 
     /* 4.4 Los tres pasajeros con más vuelos */
+    db.tickets.aggregate(
+    [
+      {
+        $group:
+        {
+          _id: '$passenger_id',
+          maxQuantity: { $max: '$amount' }
+        }
+      },
+      { 
+        $limit : 3 
+      }
+    ])
 

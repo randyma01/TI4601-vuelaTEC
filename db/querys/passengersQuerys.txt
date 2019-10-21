@@ -56,7 +56,6 @@
 
 /* 2. Compra de boletos */
 
-
 // filtro: por id de pasajero y id vuelo
 db.tickets.insert(
 	{
