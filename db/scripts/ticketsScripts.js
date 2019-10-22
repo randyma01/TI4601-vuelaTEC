@@ -18,7 +18,7 @@ db.tickets.insert({
   passenger_id: 123454325,
   checked: false,
   boarded: false,
-  dateBought: '12-03-2019'
+  dateBought: '2019-12-03'
 });
 
 db.tickets.insert({
@@ -31,7 +31,7 @@ db.tickets.insert({
   passenger_id: 123454325,
   checked: false,
   boarded: false,
-  dateBought: '12-05-2019'
+  dateBought: '2019-12-05'
 });
 
 //---//
@@ -45,7 +45,7 @@ db.tickets.insert({
   passenger_id: 157483924,
   checked: false,
   boarded: false,
-  dateBought: '15-03-2019'
+  dateBought: '2019-15-03'
 });
 
 db.tickets.insert({
@@ -58,7 +58,7 @@ db.tickets.insert({
   passenger_id: 157483924,
   checked: false,
   boarded: false,
-  dateBought: '18-06-2019'
+  dateBought: '2019-18-06'
 });
 
 db.tickets.insert({
@@ -71,5 +71,5 @@ db.tickets.insert({
   passenger_id: 157483924,
   checked: false,
   boarded: false,
-  dateBought: '12-12-2019'
+  dateBought: '2019-12-12'
 });
