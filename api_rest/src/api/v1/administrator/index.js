@@ -1,4 +1,5 @@
 import Airlines from '../../../models/airlines';
+import Employee from '../../../models/employee';
 import Flights from '../../../models/flights';
 import Tickets from '../../../models/tickets';
 
@@ -11,58 +12,12 @@ function AdministratorRoute(server) {
         return '<h1> admin working! </h1>';
       }
     },
-    {
-      method: 'GET',
-      path: '/admin/airlines/findAll',
-      handler: async (request, reply) => {
-        try {
-          const person = await Airlines.find();
-          return reply.response(person);
-        } catch (error) {
-          return reply.response(error).code(500);
-        }
-      }
-    },
-    {
-      method: 'GET',
-      path: '/admin/airlines/findById/{id}',
-      handler: async (request, reply) => {
-        try {
-          const airlineId = request.params.id;
-          const airlines = await Airlines.findById(airlineId);
-          return reply.response(airlines);
-        } catch (error) {
-          return reply.response(error).code(500);
-        }
-      }
-    },
-    {
-      method: 'GET',
-      path: '/admin/flights/findAll',
-      handler: async (request, reply) => {
-        try {
-          const flights = await Flights.find();
-          return reply.response(flights);
-        } catch (error) {
-          return reply.response(error).code(500);
-        }
-      }
-    },
-    {
-      method: 'GET',
-      path: '/admin/flights/findById/{id}',
-      handler: async (request, reply) => {
-        try {
-          const flightsId = request.params.id;
-          const flights = await Flights.findById(flightsId);
-          return reply.response(flights);
-        } catch (error) {
-          return reply.response(error).code(500);
-        }
-      }
-    },
 
-    // 1. -- total profit of flights
+    //-------------------------------------------------//
+    //---------------------Reports---------------------//
+    //-------------------------------------------------//
+
+    // 1. -- total profit of flights -- //
     {
       method: 'GET',
       path: '/admin/totalProfitFlights',
@@ -91,7 +46,7 @@ function AdministratorRoute(server) {
       }
     },
 
-    // 2. -- range of tickets bought by passenger
+    // 2. -- range of tickets bought by passenger -- //
     {
       method: 'GET',
       path: '/admin/rangeTicketsPassengers/{id}',
@@ -119,7 +74,7 @@ function AdministratorRoute(server) {
       }
     },
 
-    // 3. -- most visited destinations
+    // 3. -- most visited destinations -- //
     {
       method: 'GET',
       path: '/admin/mostVisitedDestinations/',
@@ -140,7 +95,7 @@ function AdministratorRoute(server) {
       }
     },
 
-    // 4.1 -- total amount of ticket per passengers general
+    // 4.1 -- total amount of ticket per passengers general -- //
     {
       method: 'GET',
       path: '/admin/ticketsPassengers/{id}',
@@ -169,7 +124,7 @@ function AdministratorRoute(server) {
       }
     },
 
-    // 4.2 -- total amount of ticket per passengers by dates
+    // 4.2 -- total amount of ticket per passengers by dates -- //
     {
       method: 'GET',
       path: '/admin/ticketsPassengerDates/{date}',
@@ -199,7 +154,7 @@ function AdministratorRoute(server) {
       }
     },
 
-    // 4.3 -- total amount of ticket per passengers by state
+    // 4.3 -- total amount of ticket per passengers by state -- //
     {
       method: 'GET',
       path: '/admin/ticketsPassengerState/{id}',
@@ -229,7 +184,7 @@ function AdministratorRoute(server) {
       }
     },
 
-    // 4.4 -- top three passangers with most flights
+    // 4.4 -- top three passangers with most flights -- //
     {
       method: 'GET',
       path: '/admin/topThreePassengers/',
@@ -248,6 +203,323 @@ function AdministratorRoute(server) {
           ]);
 
           return reply.response(topThreePassengers);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    //-------------------------------------------------//
+    //------------------CRUD Airports------------------//
+    //-------------------------------------------------//
+
+    // -- new airport --//
+    {
+      method: 'POST',
+      path: '/admin/newAirport/',
+      handler: async (request, reply) => {
+        try {
+          const newAirports = new Airlines(request.payload);
+          const result = await newAirports.save();
+          return reply.response(result);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    // -- edit airport by id --//
+    {
+      method: 'PUT',
+      path: '/admin/updateAirport/{id}',
+      handler: async (request, reply) => {
+        try {
+          const result = await Airports.findByIdAndUpdate(
+            request.params.id,
+            request.payload,
+            { new: true }
+          );
+          return reply.response(result);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    // -- find airport all and by id --//
+    {
+      method: 'GET',
+      path: '/admin/findAllAirports/',
+      handler: async (request, reply) => {
+        try {
+          const airport = await Airports.find();
+          return reply.response(airport);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+    {
+      method: 'GET',
+      path: '/admin/airlines/findAirportsId/{id}',
+      handler: async (request, reply) => {
+        try {
+          const airlineId = request.params.id;
+          const airlines = await Airlines.findById(airlineId);
+          return reply.response(airlines);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    // -- remove airport by id --//
+    {
+      method: 'DELETE',
+      path: '/admin/deleteAirports/{id}',
+      handler: async (request, reply) => {
+        try {
+          const airportsId = request.params.id;
+          const result = await Airports.findByIdAndDelete(airportsId);
+          return reply.response(result);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    //-------------------------------------------------//
+    //------------------CRUD Airlines------------------//
+    //-------------------------------------------------//
+
+    // -- new airline --//
+    {
+      method: 'POST',
+      path: '/admin/newAirline/',
+      handler: async (request, reply) => {
+        try {
+          const newAirlines = new Airlines(request.payload);
+          const result = await newAirlines.save();
+          return reply.response(result);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    // -- edit airlines by id --//
+    {
+      method: 'PUT',
+      path: '/admin/updateAirlines/{id}',
+      handler: async (request, reply) => {
+        try {
+          const result = await Airlines.findByIdAndUpdate(
+            request.params.id,
+            request.payload,
+            { new: true }
+          );
+          return reply.response(result);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    // -- find airline all and by id --//
+    {
+      method: 'GET',
+      path: '/admin/findAllAirlines/',
+      handler: async (request, reply) => {
+        try {
+          const airline = await Airlines.find();
+          return reply.response(airline);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+    {
+      method: 'GET',
+      path: '/admin/airlines/findAirlinesId/{id}',
+      handler: async (request, reply) => {
+        try {
+          const airlineId = request.params.id;
+          const airlines = await Airlines.findById(airlineId);
+          return reply.response(airlines);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    // -- remove airline by id --//
+    {
+      method: 'DELETE',
+      path: '/admin/deleteAirline/{id}',
+      handler: async (request, reply) => {
+        try {
+          const airlineId = request.params.id;
+          const result = await Airlines.findByIdAndDelete(airlineId);
+          return reply.response(result);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    //-------------------------------------------------//
+    //-------------------CRUD Flights------------------//
+    //-------------------------------------------------//
+
+    // -- new flights --//
+    {
+      method: 'POST',
+      path: '/admin/newFlight/',
+      handler: async (request, reply) => {
+        try {
+          const newFlight = new Flights(request.payload);
+          const result = await newFlight.save();
+          return reply.response(result);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    // -- edit flights by id --//
+    {
+      method: 'PUT',
+      path: '/admin/updateFlight/{id}',
+      handler: async (request, reply) => {
+        try {
+          const result = await Flights.findByIdAndUpdate(
+            request.params.id,
+            request.payload,
+            { new: true }
+          );
+          return reply.response(result);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    // -- find flights all and by id --//
+    {
+      method: 'GET',
+      path: '/admin/findAllFlights/',
+      handler: async (request, reply) => {
+        try {
+          const flights = await Flights.find();
+          return reply.response(flights);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+    {
+      method: 'GET',
+      path: '/admin/flights/findFlightsId/{id}',
+      handler: async (request, reply) => {
+        try {
+          const flightsId = request.params.id;
+          const flights = await Flights.findById(flightsId);
+          return reply.response(flights);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    // -- remove flights by id --//
+    {
+      method: 'DELETE',
+      path: '/admin/deleteFlight/{id}',
+      handler: async (request, reply) => {
+        try {
+          const flightId = request.params.id;
+          const result = await Flights.findByIdAndDelete(flightId);
+          return reply.response(result);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    //-------------------------------------------------//
+    //------------------CRUD Employees-----------------//
+    //-------------------------------------------------//
+
+    // -- new employee --//
+    {
+      method: 'POST',
+      path: '/admin/newEmployee/',
+      handler: async (request, reply) => {
+        try {
+          const newEmployee = new Employee(request.payload);
+          const result = await newEmployee.save();
+          return reply.response(result);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    // -- edit employee by id --//
+    {
+      method: 'PUT',
+      path: '/admin/updateEmployee/{id}',
+      handler: async (request, reply) => {
+        try {
+          const result = await Employee.findByIdAndUpdate(
+            request.params.id,
+            request.payload,
+            { new: true }
+          );
+          return reply.response(result);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    // -- find employees all and by id --//
+    {
+      method: 'GET',
+      path: '/admin/findEmployeesAll/',
+      handler: async (request, reply) => {
+        try {
+          const person = await Employee.find();
+          return reply.response(person);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    {
+      method: 'GET',
+      path: '/admin/findEmployeesId/{id}',
+      handler: async (request, reply) => {
+        try {
+          const personId = request.params.id;
+          const person = await Employee.findById(personId);
+          return reply.response(person);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    // -- remove employee by id --//
+    {
+      method: 'DELETE',
+      path: '/admin/deleteEmployee/{id}',
+      handler: async (request, reply) => {
+        try {
+          const personId = request.params.id;
+          const result = await Employee.findByIdAndDelete(personId);
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }

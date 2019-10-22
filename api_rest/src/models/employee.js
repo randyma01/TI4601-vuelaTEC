@@ -9,7 +9,8 @@ const EmployeeSchema = new Schema({
   username: String,
   password: String,
   role: String,
-  initalDate: Date
+  area: String,
+  initalDate: String
 });
 
 export default mongoose.model('Employee', EmployeeSchema);

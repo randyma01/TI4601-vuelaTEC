@@ -23,7 +23,8 @@ db.airlines.insert({
     'United States',
     'Germany',
     'Japan'
-  ]
+  ],
+  airport_id: 'ATL'
 });
 
 db.airlines.insert({
@@ -39,7 +40,8 @@ db.airlines.insert({
     'United States',
     'Germany',
     'Japan'
-  ]
+  ],
+  airport_id: 'FRA'
 });
 
 db.airlines.insert({
@@ -56,7 +58,8 @@ db.airlines.insert({
     'United States',
     'Germany',
     'Japan'
-  ]
+  ],
+  airport_id: 'LHR'
 });
 
 db.airlines.insert({
@@ -71,7 +74,8 @@ db.airlines.insert({
     'United States',
     'Germany',
     'Japan'
-  ]
+  ],
+  airport_id: 'DXB'
 });
 
 db.airlines.insert({
@@ -84,7 +88,8 @@ db.airlines.insert({
     'United States',
     'Germany',
     'Japan'
-  ]
+  ],
+  airport_id: 'ATL'
 });
 
 db.airlines.insert({
@@ -98,5 +103,6 @@ db.airlines.insert({
     'United States',
     'Germany',
     'Japan'
-  ]
+  ],
+  airport_id: 'DXB'
 });

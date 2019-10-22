@@ -10,18 +10,6 @@ function EmployeesRoutes(server) {
         return '<h1> employees working! </h1>';
       }
     },
-    {
-      method: 'GET',
-      path: '/employees/findAll',
-      handler: async (request, reply) => {
-        try {
-          const person = await Employee.find({ firstName: 'Camila' });
-          return reply.response(person);
-        } catch (error) {
-          return reply.response(error).code(500);
-        }
-      }
-    },
 
     // 1. verify check-in
     {

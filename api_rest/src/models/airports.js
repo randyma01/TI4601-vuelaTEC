@@ -8,7 +8,8 @@ const AirportSchema = new Schema({
   city: String,
   country: String,
   number: String,
-  webPage: String
+  webPage: String,
+  airport_id: String
 });
 
 export default mongoose.model('Airport', AirportSchema);

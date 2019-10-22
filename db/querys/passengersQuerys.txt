@@ -25,14 +25,10 @@
     },
     {
       $set : {
-      'firstName': '',
-      'lastName': '',
-      'username': '',
-      'email': '',
       'password': '',
       'country': ' ',
       'address': '',
-      'phone': 
+      'phone': ''
     }
   });
 
