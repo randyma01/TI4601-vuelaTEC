@@ -261,7 +261,7 @@ function AdministratorRoute(server) {
     },
     {
       method: 'GET',
-      path: '/admin/airlines/findAirportsId/{id}',
+      path: '/admin/findAirportsId/{id}',
       handler: async (request, reply) => {
         try {
           const airlineId = request.params.id;
@@ -340,7 +340,7 @@ function AdministratorRoute(server) {
     },
     {
       method: 'GET',
-      path: '/admin/airlines/findAirlinesId/{id}',
+      path: '/admin/findAirlinesId/{id}',
       handler: async (request, reply) => {
         try {
           const airlineId = request.params.id;
@@ -419,7 +419,7 @@ function AdministratorRoute(server) {
     },
     {
       method: 'GET',
-      path: '/admin/flights/findFlightsId/{id}',
+      path: '/admin/findFlightsId/{id}',
       handler: async (request, reply) => {
         try {
           const flightsId = request.params.id;
@@ -486,7 +486,7 @@ function AdministratorRoute(server) {
     // -- find employees all and by id --//
     {
       method: 'GET',
-      path: '/admin/findEmployeesAll/',
+      path: '/admin/findAllEmployees/',
       handler: async (request, reply) => {
         try {
           const person = await Employee.find();
