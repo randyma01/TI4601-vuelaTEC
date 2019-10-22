@@ -21,11 +21,6 @@ const init = async () => {
       console.log('Connection to database: Successful!');
     });
 
-    /* mongoose.connect('mongodb://localhost/testing');
-    mongoose.connection.once('open', () => {
-      console.log('Connection to database: Successful!');
-    }); */
-
     administratorRoutes(server);
     employeesRoutes(server);
     passengerRoutes(server);

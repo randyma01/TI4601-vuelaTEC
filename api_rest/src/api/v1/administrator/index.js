@@ -23,7 +23,7 @@ function AdministratorRoute(server) {
       path: '/admin/totalProfitFlights',
       handler: async (request, reply) => {
         try {
-          const airlines = await Flights.aggregate([
+          const result = await Flights.aggregate([
             {
               $group: {
                 _id: {
@@ -39,7 +39,7 @@ function AdministratorRoute(server) {
               }
             }
           ]);
-          return reply.response(airlines);
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -53,7 +53,7 @@ function AdministratorRoute(server) {
       handler: async (request, reply) => {
         try {
           const passengerId = parseInt(request.params.id);
-          const ticketsByPassenger = await Tickets.aggregate([
+          const result = await Tickets.aggregate([
             {
               $match: {
                 passenger_id: passengerId
@@ -67,7 +67,7 @@ function AdministratorRoute(server) {
               }
             }
           ]);
-          return reply.response(ticketsByPassenger);
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -80,7 +80,7 @@ function AdministratorRoute(server) {
       path: '/admin/mostVisitedDestinations/',
       handler: async (request, reply) => {
         try {
-          const mostVisited = await Tickets.aggregate([
+          const result = await Tickets.aggregate([
             {
               $group: {
                 _id: null,
@@ -88,7 +88,7 @@ function AdministratorRoute(server) {
               }
             }
           ]);
-          return reply.response(mostVisited);
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -102,7 +102,7 @@ function AdministratorRoute(server) {
       handler: async (request, reply) => {
         try {
           const passengerId = parseInt(request.params.id);
-          const amountTicketsPassengers = await Tickets.aggregate([
+          const result = await Tickets.aggregate([
             {
               $match: {
                 passenger_id: passengerId
@@ -117,7 +117,7 @@ function AdministratorRoute(server) {
               }
             }
           ]);
-          return reply.response(amountTicketsPassengers);
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -131,7 +131,7 @@ function AdministratorRoute(server) {
       handler: async (request, reply) => {
         try {
           const date = request.params.date;
-          const amountTicketsPassengers = await Tickets.aggregate([
+          const result = await Tickets.aggregate([
             {
               $match: {
                 dateBought: date
@@ -147,7 +147,7 @@ function AdministratorRoute(server) {
             }
           ]);
           return date;
-          return reply.response(amountTicketsPassengers);
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -161,7 +161,7 @@ function AdministratorRoute(server) {
       handler: async (request, reply) => {
         try {
           const passengerId = parseInt(request.params.state);
-          const amountTicketsPassengers = await Tickets.aggregate([
+          const result = await Tickets.aggregate([
             {
               $match: {
                 passenger_id: passengerId,
@@ -177,7 +177,7 @@ function AdministratorRoute(server) {
               }
             }
           ]);
-          return reply.response(amountTicketsPassengers);
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -190,7 +190,7 @@ function AdministratorRoute(server) {
       path: '/admin/topThreePassengers/',
       handler: async (request, reply) => {
         try {
-          const topThreePassengers = await Tickets.aggregate([
+          const result = await Tickets.aggregate([
             {
               $group: {
                 _id: '$passenger_id',
@@ -202,7 +202,7 @@ function AdministratorRoute(server) {
             }
           ]);
 
-          return reply.response(topThreePassengers);
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -252,8 +252,8 @@ function AdministratorRoute(server) {
       path: '/admin/findAllAirports/',
       handler: async (request, reply) => {
         try {
-          const airport = await Airports.find();
-          return reply.response(airport);
+          const result = await Airports.find();
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -265,8 +265,8 @@ function AdministratorRoute(server) {
       handler: async (request, reply) => {
         try {
           const airlineId = request.params.id;
-          const airlines = await Airlines.findById(airlineId);
-          return reply.response(airlines);
+          const result = await Airlines.findById(airlineId);
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -331,8 +331,8 @@ function AdministratorRoute(server) {
       path: '/admin/findAllAirlines/',
       handler: async (request, reply) => {
         try {
-          const airline = await Airlines.find();
-          return reply.response(airline);
+          const result = await Airlines.find();
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -344,8 +344,8 @@ function AdministratorRoute(server) {
       handler: async (request, reply) => {
         try {
           const airlineId = request.params.id;
-          const airlines = await Airlines.findById(airlineId);
-          return reply.response(airlines);
+          const result = await Airlines.findById(airlineId);
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -410,8 +410,8 @@ function AdministratorRoute(server) {
       path: '/admin/findAllFlights/',
       handler: async (request, reply) => {
         try {
-          const flights = await Flights.find();
-          return reply.response(flights);
+          const result = await Flights.find();
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -423,8 +423,8 @@ function AdministratorRoute(server) {
       handler: async (request, reply) => {
         try {
           const flightsId = request.params.id;
-          const flights = await Flights.findById(flightsId);
-          return reply.response(flights);
+          const result = await Flights.findById(flightsId);
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -489,8 +489,8 @@ function AdministratorRoute(server) {
       path: '/admin/findAllEmployees/',
       handler: async (request, reply) => {
         try {
-          const person = await Employee.find();
-          return reply.response(person);
+          const result = await Employee.find();
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -503,8 +503,8 @@ function AdministratorRoute(server) {
       handler: async (request, reply) => {
         try {
           const personId = request.params.id;
-          const person = await Employee.findById(personId);
-          return reply.response(person);
+          const result = await Employee.findById(personId);
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }

@@ -50,42 +50,15 @@ db.tickets.update(
   }
 );
 
-/* 4. Ejecutar los siguientes reportes: */
+/* 4. Ejecutar los siguientes reportes: 
+Vuelos registrados en el sistema: se muestra un listado con la 
+información de los vuelos registrados. Se puede filtrar por rango de fechas, 
+por estado, por nombre de pasajero. Para cada vuelo se debe mostrar el detalle. */
 
-/* 4.1 Vuelos registrados en el sistema: se muestra un listado con la 
-        información de los vuelos registrados. Se puede filtrar por rango de fechas, 
-        por estado, por nombre de pasajero. Para cada vuelo se debe mostrar el detalle. */
-
-/* 4.2.1 Listado de todos los vuelos en el sistema de manera general*/
+/* 4.2 Listado de todos los vuelos en el sistema de manera general*/
 
 db.flights.find();
 
-/* 4.2.2 Listado de todos los vuelos en el sistema por fechas, estado y nombre pasajero */
+/* 4.3 Listado de todos los vuelos en el sistema por fechas, estado y nombre pasajero */
 
-db.tickets.find([
-  {
-    firstName: '',
-    lastName: '',
-    state: '',
-    date: ''
-  }
-]);
-/* 4.2.3 Listado de todos los vuelos en el sistema por nombre de pasajero */
-
-db.tickets.find([
-  {
-    firstName: '',
-    lastName: ''
-  }
-]);
-
-db.passengers.aggregate([
-  {
-    $lookup: {
-      from: 'tickets',
-      localField: '_id',
-      foreignField: 'passenger_id',
-      as: 'ticketsInfo'
-    }
-  }
-]);
+/* 4.4 Listado de todos los vuelos en el sistema por nombre de pasajero */

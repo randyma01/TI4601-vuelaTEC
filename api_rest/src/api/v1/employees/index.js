@@ -1,4 +1,3 @@
-import Employees from '../../../models/employee';
 import Passengers from '../../../models/passenger';
 import Tickets from '../../../models/tickets';
 
@@ -24,7 +23,7 @@ function EmployeesRoutes(server) {
       path: '/employee/passengerInfo/',
       handler: async (request, reply) => {
         try {
-          const person = await Passengers.aggregate([
+          const result = await Passengers.aggregate([
             {
               $lookup: {
                 from: 'tickets',
@@ -34,7 +33,7 @@ function EmployeesRoutes(server) {
               }
             }
           ]);
-          return reply.response(person);
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -47,7 +46,7 @@ function EmployeesRoutes(server) {
       handler: async (request, reply) => {
         try {
           const personId = parseInt(request.params.id);
-          const person = await Passengers.aggregate([
+          const result = await Passengers.aggregate([
             {
               $match: {
                 _id: personId
@@ -62,7 +61,7 @@ function EmployeesRoutes(server) {
               }
             }
           ]);
-          return reply.response(person);
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
@@ -76,7 +75,7 @@ function EmployeesRoutes(server) {
       handler: async (request, reply) => {
         try {
           const { _id, passenger_id } = request.payload;
-          const boarded = await Tickets.update(
+          const result = await Tickets.update(
             {
               _id: _id,
               passenger_id: passenger_id
@@ -87,34 +86,35 @@ function EmployeesRoutes(server) {
               }
             }
           );
-          return reply.response(boarded);
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
       }
     },
 
-    // 4.2 -- flights info: all and by id -- //
+    // 4.1 -- flights info: all and by id -- //
     {
       method: 'GET',
       path: '/employee/findAllFlights/',
       handler: async (request, reply) => {
         try {
-          const flights = await Flights.find();
-          return reply.response(flights);
+          const result = await Flights.find();
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
       }
     },
+
     {
       method: 'GET',
       path: '/employee/findFlightsId/{id}',
       handler: async (request, reply) => {
         try {
           const flightsId = request.params.id;
-          const flights = await Flights.findById(flightsId);
-          return reply.response(flights);
+          const result = await Flights.findById(flightsId);
+          return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
         }
