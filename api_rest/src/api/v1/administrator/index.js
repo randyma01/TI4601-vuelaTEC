@@ -1,5 +1,6 @@
 import Airlines from '../../../models/airlines';
-import Employee from '../../../models/employee';
+import Airports from '../../../models/airports';
+import Employees from '../../../models/employee';
 import Flights from '../../../models/flights';
 import Tickets from '../../../models/tickets';
 
@@ -219,7 +220,7 @@ function AdministratorRoute(server) {
       path: '/admin/newAirport/',
       handler: async (request, reply) => {
         try {
-          const newAirports = new Airlines(request.payload);
+          const newAirports = new Airport(request.payload);
           const result = await newAirports.save();
           return reply.response(result);
         } catch (error) {
@@ -264,8 +265,8 @@ function AdministratorRoute(server) {
       path: '/admin/findAirportsId/{id}',
       handler: async (request, reply) => {
         try {
-          const airlineId = request.params.id;
-          const result = await Airlines.findById(airlineId);
+          const airportId = request.params.id;
+          const result = await Airports.findById(airportId);
           return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
@@ -456,7 +457,7 @@ function AdministratorRoute(server) {
       path: '/admin/newEmployee/',
       handler: async (request, reply) => {
         try {
-          const newEmployee = new Employee(request.payload);
+          const newEmployee = new Employees(request.payload);
           const result = await newEmployee.save();
           return reply.response(result);
         } catch (error) {
@@ -471,7 +472,7 @@ function AdministratorRoute(server) {
       path: '/admin/updateEmployee/{id}',
       handler: async (request, reply) => {
         try {
-          const result = await Employee.findByIdAndUpdate(
+          const result = await Employees.findByIdAndUpdate(
             request.params.id,
             request.payload,
             { new: true }
@@ -489,7 +490,7 @@ function AdministratorRoute(server) {
       path: '/admin/findAllEmployees/',
       handler: async (request, reply) => {
         try {
-          const result = await Employee.find();
+          const result = await Employees.find();
           return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
@@ -503,7 +504,7 @@ function AdministratorRoute(server) {
       handler: async (request, reply) => {
         try {
           const personId = request.params.id;
-          const result = await Employee.findById(personId);
+          const result = await Employees.findById(personId);
           return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
@@ -518,7 +519,7 @@ function AdministratorRoute(server) {
       handler: async (request, reply) => {
         try {
           const personId = request.params.id;
-          const result = await Employee.findByIdAndDelete(personId);
+          const result = await Employees.findByIdAndDelete(personId);
           return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
