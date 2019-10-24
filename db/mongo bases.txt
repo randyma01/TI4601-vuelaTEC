@@ -1,0 +1,28 @@
+mongod --port 27020 --dbpath C:\mongoReplication1\db1\data\db --logpath C:\mongoReplication1\db1\data\log\MongoDB.log --replSet test --logappend
+
+
+
+\Program Files\MongoDB\Server\4.2\bin
+
+
+mongod --dbpath C:\mongodb\data\db --port 27017 --logpath C:\mongodb\data\log\mongod.log --journal --storageEngine=mmapv1
+
+
+mongod --bind_ip_all --port 27017 --dbpath C:\mongodb\data\db --replSet "replSet"
+
+mongod --bind_ip_all --port 27018 --dbpath C:\mongodb2\data\db --replSet "replSet"
+
+
+
+rsconf= { _id:"replSet", members: [{_id:0, host:"localhost:27017"}, {_id:1, host:"192.168.100.59:27017"}]};
+
+
+rs.slaveOk()
+
+rs.add("hostname:port")
+
+
+rs.initiate({_id: "rs0", version: 1, members: [{ _id: 0, host : "address.to.this.machine:27017" }
+      ]
+   }
+)

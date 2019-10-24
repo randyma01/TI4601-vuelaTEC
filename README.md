@@ -20,7 +20,7 @@ v1: Todo el código mostrado en el repositorio corresponde a la primera versión
 
 ## Authors ✒️
 
-- **Pablo Ezquivel** - _Programdor, Diseñador y Constructor_ - [Git Personal](https://github.com/Chanchus)
+- **Pablo Esquivel** - _Programdor, Diseñador y Constructor_ - [Git Personal](https://github.com/Chanchus)
 - **Gustavo Fallas** - _Programdor, Diseñador y Constructor_ - [Git Personal](https://github.com/luisjo81)
 - **Randy Martínez** - _Programdor, Diseñador y Constructor_ - [Git Personal](https://github.com/randyma01)
 - **Luis Martínez** - _Programdor, Diseñador y Constructor_ - [Git Personal](https://github.com/randyma01)
