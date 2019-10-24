@@ -1,3 +1,4 @@
+import Flights from '../../../models/flights';
 import Passengers from '../../../models/passenger';
 import Tickets from '../../../models/tickets';
 
@@ -120,6 +121,10 @@ function EmployeesRoutes(server) {
         }
       }
     }
+
+    //-------------------------------------------------//
+    //---------------------Extras----------------------//
+    //-------------------------------------------------//
   ]);
 }
 

@@ -7,6 +7,8 @@ const FlightSchema = new Schema({
   name: String,
   departure: String,
   arrives: String,
+  takeOff: String,
+  landing: String,
   origin: String,
   destination: String,
   price: Number,

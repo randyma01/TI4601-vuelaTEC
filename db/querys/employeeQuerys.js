@@ -55,10 +55,26 @@ Vuelos registrados en el sistema: se muestra un listado con la
 información de los vuelos registrados. Se puede filtrar por rango de fechas, 
 por estado, por nombre de pasajero. Para cada vuelo se debe mostrar el detalle. */
 
-/* 4.2 Listado de todos los vuelos en el sistema de manera general*/
+/* 4.1 Listado de todos los vuelos en el sistema de manera general*/
 
 db.flights.find();
 
-/* 4.3 Listado de todos los vuelos en el sistema por fechas, estado y nombre pasajero */
+/* 4.2 Listado de todos los vuelos en el sistema por fechas, estado y nombre pasajero */
 
-/* 4.4 Listado de todos los vuelos en el sistema por nombre de pasajero */
+/* 4.3 Listado de todos los vuelos en el sistema por nombre de pasajero */
+
+//-------------------------------------------------//
+/* EXTRAS */
+//-------------------------------------------------//
+
+/* 1. Ingreso de un Empleado */
+
+db.employees.find(
+  {
+    username: 'cammu'
+  },
+  {
+    role: 1,
+    password: 1
+  }
+);

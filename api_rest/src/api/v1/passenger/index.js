@@ -1,4 +1,6 @@
+import Flights from '../../../models/flights';
 import Passengers from '../../../models/passenger';
+import Tickets from '../../../models/tickets';
 
 function PassengersRoutes(server) {
   server.route([
@@ -9,6 +11,7 @@ function PassengersRoutes(server) {
         return '<h1> passengers waiting </h1>';
       }
     },
+
     //-------------------------------------------------//
     //---------------------Reports---------------------//
     //-------------------------------------------------//
@@ -187,6 +190,44 @@ function PassengersRoutes(server) {
           } else {
             return reply.response(resultPassenger);
           }
+        } catch (error) {
+          return error;
+        }
+      }
+    },
+
+    // ** -- info of the flights -- ** //
+    {
+      method: 'GET',
+      path: '/passengers/allFlights/',
+      handler: async (request, reply) => {
+        try {
+          const result = await Flights.find();
+          return reply.response(result);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    // ** -- info of flights available by search -- ** //
+
+    {
+      method: 'POST',
+      path: '/login/',
+      handler: async (request, reply) => {
+        try {
+          const { origin1, destination1, date1, date2 } = request.payload;
+
+          const result = await Passengers.find({
+            origin: origin1,
+            destination: destination1,
+            takeOff: {
+              $gte: date1,
+              $lt: date2
+            }
+          });
+          return reply.response(result);
         } catch (error) {
           return error;
         }

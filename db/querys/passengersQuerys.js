@@ -87,7 +87,6 @@ db.tickets
 /* 4.1 Todos los ticketes de un pasajero en general. */
 
 // filtro: por id de pasajero
-
 db.tickets.find({
   passenger_id: 123454325
 });
@@ -99,3 +98,32 @@ db.tickets.find({
 });
 
 /* 4.3 Todos los ticketes de un pasajero por estado de vuelo. */
+
+//-------------------------------------------------//
+/* EXTRAS */
+//-------------------------------------------------//
+
+/* 1. Ingreso de un Pasajero */
+
+// filtro: por username de pasajero
+db.passengers.find(
+  {
+    username: 'giorod'
+  },
+  {
+    role: 1,
+    password: 1
+  }
+);
+
+/* 2. Info de los Vuelos */
+
+// filtro: por origen, destino y fechas de un vuelo
+db.flights.find({
+  origin: 'London',
+  destination: 'Frankfurt',
+  takeOff: {
+    $gte: '2019-1-1',
+    $lt: '2019-5-10'
+  }
+});
