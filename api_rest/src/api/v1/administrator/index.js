@@ -158,15 +158,15 @@ function AdministratorRoute(server) {
     // 4.3 -- total amount of ticket per passengers by state -- //
     {
       method: 'GET',
-      path: '/admin/ticketsPassengerState/{id}',
+      path: '/admin/ticketsPassengerState/',
       handler: async (request, reply) => {
         try {
-          const passengerId = parseInt(request.params.state);
+          const { passengerId, state } = request.payload;
           const result = await Tickets.aggregate([
             {
               $match: {
-                passenger_id: passengerId,
-                used: false
+                passenger_id: parseInt(passengerId),
+                used: state
               }
             },
             {
@@ -220,7 +220,7 @@ function AdministratorRoute(server) {
       path: '/admin/newAirport/',
       handler: async (request, reply) => {
         try {
-          const newAirports = new Airport(request.payload);
+          const newAirports = new Airports(request.payload);
           const result = await newAirports.save();
           return reply.response(result);
         } catch (error) {

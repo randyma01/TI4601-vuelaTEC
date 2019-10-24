@@ -14,7 +14,8 @@ db.passengers.insert({
   lastName: 'Rodriguez',
   username: 'giorod',
   email: 'giorods@email.com',
-  password: 'QeKl503',
+  password:
+    'a34df8c494b455b246403534cf4dd2d35bd22113bc4204ed919aaabd32d3992aGcQ7GiYQvkWvGCRPluSnBw=="',
   birthday: ISODate('1995-01-03'),
   country: 'Costa Rica',
   address: 'Cartago, Cartago, Costa Rica',
@@ -27,7 +28,8 @@ db.passengers.insert({
   lastName: 'Smith',
   username: 'yanny',
   email: 'laurelsmith@email.com',
-  password: 'QeKl503',
+  password:
+    '50f86debb0083a0fa26efaee4e1992f0a946632aa443659a4ae50a44935acf32A+LAkBHrk9CZzAnfhwyIfw==',
   birthday: ISODate('1997-03-08'),
   country: 'England',
   address: 'Small Heath, Birmingham, England',

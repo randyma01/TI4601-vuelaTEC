@@ -149,6 +149,48 @@ function PassengersRoutes(server) {
           return reply.response(error).code(500);
         }
       }
+    },
+
+    //-------------------------------------------------//
+    //---------------------Extras----------------------//
+    //-------------------------------------------------//
+
+    // ** -- login para empleados y pasajeros -- ** //
+    {
+      method: 'POST',
+      path: '/login/',
+      handler: async (request, reply) => {
+        try {
+          const user = {
+            username: request.payload.username
+          };
+          const resultPassenger = await Passengers.find(
+            {
+              username: user.username
+            },
+            {
+              _id: 1,
+              password: 1
+            }
+          );
+          if (JSON.stringify(resultPassenger) === '[]') {
+            const resultEmployee = await Employees.find(
+              {
+                username: user.username
+              },
+              {
+                role: 1,
+                password: 1
+              }
+            );
+            return reply.response(resultEmployee);
+          } else {
+            return reply.response(resultPassenger);
+          }
+        } catch (error) {
+          return error;
+        }
+      }
     }
   ]);
 }
