@@ -4,14 +4,15 @@ const Schema = mongoose.Schema;
 
 const PassengerSchema = new Schema({
   _id: Number,
-  firstName: String,
-  lastName: String,
-  username: String,
-  password: String,
+  address: String,
   birthday: String,
   country: String,
-  address: String,
-  phone: Number
+  email: String,
+  firstName: String,
+  lastName: String,
+  password: String,
+  phone: [Number],
+  username: String
 });
 
 export default mongoose.model('Passenger', PassengerSchema);
