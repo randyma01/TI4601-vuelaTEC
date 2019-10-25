@@ -37,7 +37,16 @@ class LogIn extends React.Component {
   };
 
   _submitData = async () => {
-    if (await this._verifyData() == 0) {
+    /*
+    const simpleCrypto = new SimpleCrypto('vtecAPP');
+    console.log(`{ normal: ${this.state.password}, encrypt: ${simpleCrypto.encrypt(this.state.password)}`);
+    */
+    if (this.state.password === '' || this.state.userName === '') {
+      this.setState({
+        messageError: 'Debe ingresar nombre de usuario y contraseña.'
+      })
+    }
+    else if (await this._verifyData() === 0) {
       this.setState({
         isLoading: true,
         messageError: ''
@@ -51,11 +60,31 @@ class LogIn extends React.Component {
   };
 
   _verifyData = async () => {
-    const passwordDB = '12345' //TODO GET Password from databse where userName==this.state.userName
     const simpleCrypto = new SimpleCrypto('vtecAPP');
-    const passwordEncrypt = simpleCrypto.encrypt(passwordDB); //DELETE
-    const passwordDecrypt = simpleCrypto.decrypt(passwordEncrypt);
-    return this.state.password.localeCompare(passwordDecrypt)
+    let data = {
+      username: this.state.userName
+    }
+    return await fetch('http://localhost:3000/login/',
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(responseJson => {
+        if (responseJson !== '') {
+          let passwordDecrypt = simpleCrypto.decrypt(responseJson[0].password);
+          this.setState({
+            dataUser: responseJson[0]
+          })
+          return this.state.password.localeCompare(passwordDecrypt);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   render() {
@@ -108,11 +137,11 @@ class LogIn extends React.Component {
             <div >
               <Button
                 variant='primary'
-                type='submit'
                 size='lg'
+                type='submit'
                 onClick={this._submitData}
               >
-                Aceptar
+                Ingresar
             </Button>
             </div>
 
@@ -120,7 +149,6 @@ class LogIn extends React.Component {
               <Col md='auto'>
                 <Button
                   variant='primary'
-                  type='submit'
                   size='lg'
                   onClick={this._onSignUpPressed}
                 >

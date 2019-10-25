@@ -1,23 +1,26 @@
 import React from 'react';
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row, Table } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Fab from '@material-ui/core/Fab';
+import IconButton from '@material-ui/core/IconButton';
 import SimpleCrypto from 'simple-crypto-js';
+import Login from '../../session/login';
+import { Redirect } from 'react-router-dom';
 
-import Menu from '../menu';
-
-class Signup extends React.Component {
+class Account extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      dataUser: props.dataUser,
+      isDeleteAccount: false,
       address: '',
       birthDay: '',
       country: '',
       email: '',
       firstName: '',
       id: '',
-      isCreateAccount: false,
       lastName: '',
       listCities: [],
       listCountries: [],
@@ -30,7 +33,25 @@ class Signup extends React.Component {
     };
   }
 
+
   componentDidMount = async () => {
+    await fetch(`http://localhost:3000/passenger/myProfile/${this.state.dataUser._id}`,
+      {
+        method: "GET"
+      })
+      .then(response => response.json())
+      .then(responseJson => {
+        if (responseJson !== '') {
+          this.setState({
+            dataUser: responseJson,
+            phones: responseJson.phone
+          });
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
     const countries = await fetch('https://raw.githubusercontent.com/shivammathur/countrycity/master/data/geo.json',
       {
         method: 'GET'
@@ -67,9 +88,6 @@ class Signup extends React.Component {
       });
   }
 
-  _handleChangeBirthDay(event) {
-    this.setState({ birthDay: event.target.value })
-  }
 
   _handleChangeEmail(event) {
     this.setState({ email: event.target.value })
@@ -77,10 +95,6 @@ class Signup extends React.Component {
 
   _handleChangeFirstName(event) {
     this.setState({ firstName: event.target.value })
-  }
-
-  _handleChangeId(event) {
-    this.setState({ id: event.target.value })
   }
 
   _handleChangeLastName(event) {
@@ -126,9 +140,6 @@ class Signup extends React.Component {
       });
   }
 
-  _handleChangeUserName(event) {
-    this.setState({ userName: event.target.value })
-  }
 
   _onClckAddPhone = () => {
     if (this.state.phone !== '') {
@@ -139,18 +150,38 @@ class Signup extends React.Component {
     }
   }
 
+  _onClickDeleteAccount = () => {
+    let verify = window.confirm('Por favor confirme si desea borrar la cuenta');
+    console.log(verify);
+    ///passenger/deleteProfile/{id}
+    if (verify) {
+      window.location = '/';
+      this.setState({
+        isDeleteAccount: true
+      })
+    }
+    else {
+      this.setState({
+        isDeleteAccount: false
+      })
+    }
+  }
+  _onClickDeletePhone(phone) {
+    this.setState(state => {
+      const tempPhones = state.phones.filter(item => item !== phone);
+      state.phones = tempPhones;
+      return {
+        tempPhones
+      };
+    });
+  }
+
   _submitData = async () => {
     if (this.state.country === '' || this.state.address === '') {
       window.confirm("Debe seleccionar un pais y una ciudad.")
     }
     else if (this.state.firstName === '' || this.state.lastName === '') {
       window.confirm("Debe ingresar nombre completo.")
-    }
-    else if (this.state.id === '' || this.state.userName === '') {
-      window.confirm("Debe ingresar numero de identificacion y usuario.")
-    }
-    else if (this.state.birthDay === '') {
-      window.confirm("Debe ingresar una fecha de nacimiento valida.")
     }
     else if (this.state.email === '') {
       window.confirm("Debe ingresar un correo valido.")
@@ -168,45 +199,38 @@ class Signup extends React.Component {
       const simpleCrypto = new SimpleCrypto('vtecAPP');
       const passwordEncrypt = simpleCrypto.encrypt(this.state.password);
       let data = {
-        _id: this.state.id,
         address: this.state.address,
-        birthday: this.state.birthDay,
         country: this.state.country,
         email: this.state.email,
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         password: passwordEncrypt,
         phone: this.state.phones,
-        username: this.state.userName
       }
-      let result = await fetch('http://localhost:3000/passenger/createProfile/',
+      let result = await fetch(`http://localhost:3000/passenger/editProfile/${this.state.dataUser._id}`,
         {
-          method: "POST",
+          method: "PUT",
           body: JSON.stringify(data),
           headers: {
             'Content-Type': 'application/json'
           }
         });
       if (result.ok) {
-        window.confirm("¡Bienvenido al sistema VuelaTEC!");
-        this.setState({
-          isCreateAccount: true,
-          user: [{ '_id': this.state.id }]
-        })
+        window.confirm("Su informacion a sido actualizada correctamente");
       }
     }
   };
 
   render() {
-    if (this.state.isCreateAccount) {
+    if (this.state.isDeleteAccount) {
       return (
-        <Menu dataUser={this.state.user[0]} />
+        <Redirect to="/login" />
       );
     } else {
       return (
         <Container>
           <div style={{ margin: '2%' }}>
-            <h1 align='center'>Crear Cuenta de Pasajero en VuelaTEC</h1>
+            <h4 align='center'>Perfil - Ver y Editar</h4>
           </div>
           <Row className='justify-content-md-center'>
             <Col xs lg='2'></Col>
@@ -215,33 +239,33 @@ class Signup extends React.Component {
                 <Form.Row>
                   <Form.Group as={Col} controlId='formGridName'>
                     <Form.Label>Nombre</Form.Label>
-                    <Form.Control type='name' placeholder='Nombre' value={this.state.firstName} onChange={this._handleChangeFirstName.bind(this)} />
+                    <Form.Control type='name' placeholder={this.state.dataUser.firstName} value={this.state.firstName} onChange={this._handleChangeFirstName.bind(this)} />
                   </Form.Group>
 
                   <Form.Group as={Col} controlId='formGridLastname'>
                     <Form.Label>Apellido</Form.Label>
-                    <Form.Control type='name' placeholder='Apellido' value={this.state.lastName} onChange={this._handleChangeLastName.bind(this)} />
+                    <Form.Control type='name' placeholder={this.state.dataUser.lastName} value={this.state.lastName} onChange={this._handleChangeLastName.bind(this)} />
                   </Form.Group>
                 </Form.Row>
 
                 <Form.Row>
                   <Form.Group as={Col} controlId='formGridId'>
                     <Form.Label>Identificación</Form.Label>
-                    <Form.Control type='number' placeholder='Numero de identificacion o pasaporte' value={this.state.id} onChange={this._handleChangeId.bind(this)} />
+                    <Form.Control type='number' placeholder={this.state.dataUser._id} disabled />
                   </Form.Group>
                 </Form.Row>
 
                 <Form.Row>
                   <Form.Group as={Col} controlId='formGridUsername'>
                     <Form.Label>Usuario</Form.Label>
-                    <Form.Control type='string' placeholder='Usuario' value={this.state.userName} onChange={this._handleChangeUserName.bind(this)} />
+                    <Form.Control type='string' placeholder={this.state.dataUser.username} disabled />
                   </Form.Group>
                 </Form.Row>
 
                 <Form.Row>
                   <Form.Group as={Col} controlId='formGridEmail'>
                     <Form.Label>Correo electrónico</Form.Label>
-                    <Form.Control type='email' placeholder='Correo electrónico' value={this.state.email} onChange={this._handleChangeEmail.bind(this)} />
+                    <Form.Control type='email' placeholder={this.state.dataUser.email} value={this.state.email} onChange={this._handleChangeEmail.bind(this)} />
                   </Form.Group>
                 </Form.Row>
 
@@ -260,14 +284,14 @@ class Signup extends React.Component {
                 <Form.Row>
                   <Form.Group as={Col} controlId='formGridBirthDay'>
                     <Form.Label>Fecha de Naciemiento</Form.Label>
-                    <Form.Control type="date" placeholder="dd/mm/yyyy" value={this.state.birthDay} onChange={this._handleChangeBirthDay.bind(this)} />
+                    <Form.Control type='string' placeholder={this.state.dataUser.birthday} disabled />
                   </Form.Group>
                 </Form.Row>
 
 
                 <Form.Row>
                   <Form.Group as={Col} controlId="ControlSelectCountry">
-                    <Form.Label>País</Form.Label>
+                    <Form.Label>País ({this.state.dataUser.country})</Form.Label>
                     <Form.Control as="select" onChange={this._handleChangeSelectCountry.bind(this)}>
                       {this.state.listCountries.map((item, index) => (
                         <option value={'{"country":"' + item.name + '", "code":"' + item.phone_code + '"}'} key={index} >{item.name}</option>
@@ -276,7 +300,7 @@ class Signup extends React.Component {
                   </Form.Group>
 
                   <Form.Group as={Col} controlId="ControlSelectCity">
-                    <Form.Label>Ciudad</Form.Label>
+                    <Form.Label>Ciudad ({this.state.dataUser.address})</Form.Label>
                     <Form.Control as="select" value={this.state.address} onChange={this._handleChangeSelectCity.bind(this)}>
                       {this.state.listCities.map((item, key) => (
                         <option key={key}>{item}</option>
@@ -296,13 +320,29 @@ class Signup extends React.Component {
                       <AddIcon />
                       Agregar Numero
                   </Fab>
-                    {this.state.phones.map((item, key) => (
-                      <p style={{ margin: '2%' }} key={key}> (+{this.state.codeCountry})  {item}</p>
-                    ))}
+                    <div style={{ overflow: 'auto', height: '200px' }}>
+                      <Table striped bordered hover responsive >
+                        <thead>
+                          <tr>
+                            <th>Telefono</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {this.state.phones.map((item, index) => (
+                            <tr key={index}>
+                              <td>{item}</td>
+                              <td>
+                                <IconButton aria-label="delete" style={{ color: 'red' }} onClick={this._onClickDeletePhone.bind(this, item)}>
+                                  <DeleteIcon />
+                                </IconButton>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </Table>
+                    </div>
                   </Form.Group>
-
                 </Form.Row>
-
               </Form>
             </Col>
             <Col xs lg='2'></Col>
@@ -311,23 +351,21 @@ class Signup extends React.Component {
           <Row className='justify-content-md-center' style={{ margin: '3%' }}>
             <div>
               <Button
-                variant='primary'
+                variant='success'
                 type='submit'
                 size='lg'
-                onClick={this._submitData}
-              >
-                Aceptar
+                onClick={this._submitData}>
+                Aplicar Cambios
             </Button>
             </div>
 
             <div>
               <Col md='auto'>
                 <Button
-                  variant='primary'
-                  type='submit'
+                  variant='danger'
                   size='lg'
-                >
-                  <a href="http://localhost:8080" style={{ color: 'white', textDecoration: 'none' }}>Cancelar</a>
+                  onClick={this._onClickDeleteAccount}>
+                  Borrar Cuenta
                 </Button>
               </Col>
             </div>
@@ -337,4 +375,5 @@ class Signup extends React.Component {
     }
   }
 }
-export default Signup;
+
+export default Account;

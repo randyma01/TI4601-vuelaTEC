@@ -1,19 +1,30 @@
 import React from 'react';
 import {
   BrowserRouter as Router,
-  Redirect,
+  Link,
   Route,
-  Switch,
-  Link
+  Switch
 } from 'react-router-dom';
-
-import HomeComponent from './home';
-import Screen1Component from './screen1/screen1';
-import Screen2Component from './screen2/screen2';
-import Screen3Component from './screen3/screen3';
-import { Container, Row, Col, Navbar, Nav, Button, FormControl, Form } from 'react-bootstrap';
-
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+//componnets
+import HomeComponent from './home';
+import Login from './session/login';
+//administrator access
+import AirlineComponent from '../components/Administrator/Airline';
+import AirportComponent from '../components/Administrator/Airport';
+import EmployeeComponent from '../components/Administrator/Employee';
+import FlightComponent from '../components/Administrator/Flight';
+import ReportComponent from '../components/Administrator/Report';
+//operatos||technician access
+import FlightComponentEmployee from '../components/Employee/Flight';
+import ReportComponentEmployee from '../components/Employee/Report';
+//passenger access
+import AccountComponentPassenger from '../components/Passenger/Account';
+import FlightComponentPassenger from '../components/Passenger/Flight';
+import ReportComponentPassenger from '../components/Passenger/Report';
+import TicketComponentPassenger from '../components/Passenger/Ticket';
+
 
 class Menu extends React.Component {
   constructor(props) {
@@ -23,45 +34,79 @@ class Menu extends React.Component {
     };
   }
 
+  _optionUser = () => {
+    if (this.state.dataUser.role === 'administrator') {
+      return (
+        <Nav className="mr-auto">
+          <Nav.Link as="span">{<Link to="/airports" style={{ color: '#FFF' }}>Aeropuertos</Link>}</Nav.Link>
+          <Nav.Link as="span">{<Link to="/airlines" style={{ color: '#FFF' }}>Aerolineas</Link>}</Nav.Link>
+          <Nav.Link as="span">{<Link to="/flights" style={{ color: '#FFF' }}>Vuelos</Link>}</Nav.Link>
+          <Nav.Link as="span">{<Link to="/employees" style={{ color: '#FFF' }}>Empleados</Link>}</Nav.Link>
+          <Nav.Link as="span">{<Link to="/reports" style={{ color: '#FFF' }}>Reportes</Link>}</Nav.Link>
+        </Nav>
+      )
+    }
+    else if (this.state.dataUser.role === 'operator' || this.state.dataUser.role === 'technician') {
+      return (
+        <Nav className="mr-auto">
+          <Nav.Link as="span">{<Link to="/employee/flights" style={{ color: '#FFF' }}>Vuelos</Link>}</Nav.Link>
+          <Nav.Link as="span">{<Link to="/employee/reports" style={{ color: '#FFF' }}>Reportes</Link>}</Nav.Link>
+        </Nav >
+      )
+    }
+    //passenger
+    else {
+      return (
+        <Nav className="mr-auto">
+          <Nav.Link as="span">{<Link to="/passenger/tickets" style={{ color: '#FFF' }}>Comprar Boletos</Link>}</Nav.Link>
+          <Nav.Link as="span">{<Link to="/passenger/flights" style={{ color: '#FFF' }}>Check-in</Link>}</Nav.Link>
+          <Nav.Link as="span">{<Link to="/passenger/reports" style={{ color: '#FFF' }}>Mis Vuelos</Link>}</Nav.Link>
+
+        </Nav >
+      )
+    }
+  }
+
   render() {
+    const optionAccount = Object.keys(this.state.dataUser).indexOf('role') === -1 ? (
+      <Nav.Link as="span">{<Link to="/passenger/account" style={{ color: 'rgba(255, 255, 255, .5)' }}>Mi Cuenta</Link>}</Nav.Link>
+    ) : null;
     return (
-      <div style={{ marginTop: '2%' }}>
-        <Container>
-          <Row >
-            <Col md="auto">
-              <Router>
-                <header>
-                  <div className="row">
-                    <div className="col-lg-auto">
-                      <Navbar bg="light" variant="light">
-                        <Navbar.Brand>{<Link to="/">Nombre Sitio Web</Link>}</Navbar.Brand>
-                        <Nav className="mr-auto">
-                          <Nav.Link >{<Link to="/screen1">Screen1</Link>}</Nav.Link>
-                          <Nav.Link > {<Link to="/screen2">Screen2</Link>}</Nav.Link>
-                          <Nav.Link >{<Link to="/screen3">Screen3</Link>}</Nav.Link>
-                        </Nav>
-                      </Navbar>
-                    </div>
-                    <div className="col-md-auto">
-                      <a href="http://localhost:8080">Cerrar Sesion</a>
-                    </div>
-                  </div>
-                </header>
-                <main>
-                  <Switch>
-                    <Route path='/' exact component={HomeComponent} />
-                    <Route path='/screen2' exact component={() => <Screen2Component  /*userType={this.state.dataUser.type} userId={this.state.dataUser.id} */ />} />
-                    <Route path='/screen1' exact component={() => <Screen1Component /*userType={this.state.dataUser.type} userId={this.state.dataUser.id} */ />} />
-                    <Route path='/screen3' exact component={() => <Screen3Component /*userType={this.state.dataUser.type} userId={this.state.dataUser.id} */ />} />
-                    <Redirect to='/' />
-                    Main Content Here!
-                </Switch>
-                </main>
-              </Router>
-            </Col>
-          </Row>
-        </Container>
-      </div>
+      <Container style={{ marginTop: '2%' }}>
+        <Router>
+          <header>
+            <Navbar expand="lg" variant="dark" style={{ backgroundColor: '#286178' }}>
+              <Navbar.Brand>{<Link to="/" style={{ color: '#FFF' }}>VuelaTEC</Link>}</Navbar.Brand>
+              <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+              <Navbar.Collapse id="responsive-navbar-nav">
+                {this._optionUser()}
+                <Nav>
+                  {optionAccount}
+                  <Nav.Link href="http://localhost:8080">Cerrar Sesión</Nav.Link>
+                </Nav>
+              </Navbar.Collapse>
+            </Navbar>
+          </header>
+          <main>
+            <Switch>
+              <Route path='/' exact component={HomeComponent} />
+              <Route path='/screen2' exact component={() => <AirportComponent  /*userType={this.state.dataUser.type} userId={this.state.dataUser.id} */ />} />
+              <Route path='/airports' exact component={() => <AirportComponent />} />
+              <Route path='/airlines' exact component={() => <AirlineComponent />} />
+              <Route path='/employees' exact component={() => <EmployeeComponent />} />
+              <Route path='/flights' exact component={() => <FlightComponent />} />
+              <Route path='/reports' exact component={() => <ReportComponent />} />
+              <Route path='/employee/flights' exact component={() => <FlightComponentEmployee />} />
+              <Route path='/employee/reports' exact component={() => <ReportComponentEmployee />} />
+              <Route path='/passenger/tickets' exact component={() => <TicketComponentPassenger />} />
+              <Route path='/passenger/reports' exact component={() => <ReportComponentPassenger dataUser={this.state.dataUser} />} />
+              <Route path='/passenger/flights' exact component={() => <FlightComponentPassenger />} />
+              <Route path='/passenger/account' exact component={() => <AccountComponentPassenger dataUser={this.state.dataUser} />} />
+              <Route path='/login' exact component={() => <Login />} />
+            </Switch>
+          </main>
+        </Router>
+      </Container>
     );
   }
 }
