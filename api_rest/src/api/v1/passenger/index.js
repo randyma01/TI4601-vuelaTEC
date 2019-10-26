@@ -115,7 +115,7 @@ function PassengersRoutes(server) {
           return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
-        }
+        } 
       }
     },
 
