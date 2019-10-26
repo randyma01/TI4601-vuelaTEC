@@ -78,15 +78,21 @@ function AdministratorRoute(server) {
     // 3. -- most visited destinations -- //
     {
       method: 'GET',
-      path: '/admin/mostVisitedDestinations/',
+      path: '/admin/mostVisited/',
       handler: async (request, reply) => {
         try {
-          const result = await Tickets.aggregate([
+          const result = await Flights.aggregate([
             {
               $group: {
-                _id: null,
+                _id: '$destination',
                 maxQuantity: { $max: '$ticketsSold' }
               }
+            },
+            {
+              $limit: 3
+            },
+            {
+              $sort: { maxQuantity: -1 }
             }
           ]);
           return reply.response(result);
@@ -185,7 +191,41 @@ function AdministratorRoute(server) {
       }
     },
 
-    // 4.4 -- top three passangers with most flights -- //
+    // 4.4 -- total amount of ticket per passengers by id, dates, state -- //
+    {
+      method: 'POST',
+      path: '/admin/searchingTickets/',
+      handler: async (request, reply) => {
+        try {
+          const { passengerId, boarded, date1, date2 } = request.payload;
+          const result = await Tickets.aggregate([
+            {
+              $match: {
+                passenger_id: parseInt(passengerId),
+                boarded: boarded,
+                dateBought: {
+                  $gte: date1,
+                  $lt: date2
+                }
+              }
+            },
+            {
+              $group: {
+                _id: '$passenger_id',
+                totalTickets: {
+                  $sum: '$amount'
+                }
+              }
+            }
+          ]);
+          return reply.response(result);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
+    // 4.5 -- top three passangers with most flights -- //
     {
       method: 'GET',
       path: '/admin/topThreePassengers/',

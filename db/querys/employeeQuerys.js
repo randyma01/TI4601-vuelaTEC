@@ -3,6 +3,11 @@
 //-------------------------------------------------//
 
 /* 1. Verificar información de check-in. */
+db.tickets.find({
+  checked: {
+    $exists: true
+  }
+});
 
 /* 2. Consultar información de pasajeros por id y en general. */
 
@@ -62,6 +67,23 @@ db.flights.find();
 /* 4.2 Listado de todos los vuelos en el sistema por fechas, estado y nombre pasajero */
 
 /* 4.3 Listado de todos los vuelos en el sistema por nombre de pasajero */
+
+db.passengers.aggregate([
+  {
+    $match: {
+      _id: 123454325,
+      firstName: 'Andres'
+    }
+  },
+  {
+    $lookup: {
+      from: 'tickets',
+      localField: '_id',
+      foreignField: 'passenger_id',
+      as: 'ticketsInfo'
+    }
+  }
+]);
 
 //-------------------------------------------------//
 /* EXTRAS */

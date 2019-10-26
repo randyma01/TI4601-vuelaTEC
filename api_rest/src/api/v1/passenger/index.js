@@ -1,5 +1,6 @@
 import Flights from '../../../models/flights';
 import Passengers from '../../../models/passenger';
+import Employees from '../../../models/employee';
 import Tickets from '../../../models/tickets';
 
 function PassengersRoutes(server) {
@@ -126,7 +127,7 @@ function PassengersRoutes(server) {
         try {
           const passengerId = parseInt(request.params.id);
           const result = await Tickets.find({
-            passenger_id: personId
+            passenger_id: passengerId
           });
           return reply.response(result);
         } catch (error) {
@@ -214,7 +215,7 @@ function PassengersRoutes(server) {
 
     {
       method: 'POST',
-      path: '/login/',
+      path: '/flights/',
       handler: async (request, reply) => {
         try {
           const { origin1, destination1, date1, date2 } = request.payload;

@@ -68,13 +68,19 @@ db.flights.aggregate([
       _id: '$destination',
       maxQuantity: { $max: '$ticketsSold' }
     }
+  },
+  {
+    $limit: 3
+  },
+  {
+    $sort: { maxQuantity: -1 }
   }
 ]);
 
 /* 4. Cantidad de operaciones de compra de boletos registradas en el sistema, 
-    esta información se puede filtrar por pasajero, por rango de fechas, 
-    por estado de vuelo. También mostrar los tres pasajeros
-    con más vuelos adquiridos.  */
+    esta información se puede filtrar por pasajero, por rango de fechas, por 
+    estado de vuelo. También mostrar los tres pasajeros con más vuelos 
+    adquiridos.  */
 
 /* 4.1 Cantidad de boletos por pasajero total */
 
@@ -121,6 +127,28 @@ db.tickets.aggregate([
     $match: {
       passenger_id: 157483924,
       used: false
+    }
+  },
+  {
+    $group: {
+      _id: '$passenger_id',
+      totalTickets: {
+        $sum: '$amount'
+      }
+    }
+  }
+]);
+
+/* Cantidad de boletos de un pasajero por: id, rango de fechas y estado */
+db.tickets.aggregate([
+  {
+    $match: {
+      passenger_id: 157483924,
+      boarded: false,
+      dateBought: {
+        $gte: '2019-1-1',
+        $lt: '2019-12-12'
+      }
     }
   },
   {
@@ -327,3 +355,27 @@ db.flights.find({
 db.flights.remove({
   _id: ''
 });
+
+db.tickets.aggregate([
+  {
+    $match: {
+      $or: [
+        {
+          passenger_id: '',
+          dateBought: {
+            $gte: '2019-1-1',
+            $lt: '2019-12-12'
+          }
+        }
+      ]
+    }
+  },
+  {
+    $group: {
+      _id: '$passenger_id',
+      totalTickets: {
+        $sum: '$amount'
+      }
+    }
+  }
+]);

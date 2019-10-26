@@ -15,7 +15,7 @@ const FlightSchema = new Schema({
   restrictions: [String],
   services: [String],
   state: String,
-  capacity: Number,
+  capacityPlane: Number,
   ticketsSold: Number,
   airline_id: String
 });
