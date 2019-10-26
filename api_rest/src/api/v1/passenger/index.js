@@ -97,14 +97,18 @@ function PassengersRoutes(server) {
     // 3. -- make check in -- //
     {
       method: 'PUT',
-      path: '/passenger/makeCheckIn/{id}',
+      path: '/passenger/makeCheckIn/',
       handler: async (request, reply) => {
         try {
-          const { _id, passenger_id } = request.payload;
+          const query = {
+            ticketId: request.payload.ticketId,
+            passengerId: request.payload.passengerId
+          };
+
           const result = await Tickets.update(
             {
-              _id: _id,
-              passenger_id: passenger_id
+              _id: query.ticketId,
+              passenger_id: parseInt(query.passengerId)
             },
             {
               $set: {
@@ -115,7 +119,7 @@ function PassengersRoutes(server) {
           return reply.response(result);
         } catch (error) {
           return reply.response(error).code(500);
-        } 
+        }
       }
     },
 

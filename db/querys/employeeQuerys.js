@@ -3,11 +3,15 @@
 //-------------------------------------------------//
 
 /* 1. Verificar información de check-in. */
-db.tickets.find({
-  checked: {
-    $exists: true
+db.tickets.find(
+  {
+    _id: 'sht123',
+    passenger_id: 123454325
+  },
+  {
+    checked: 1
   }
-});
+);
 
 /* 2. Consultar información de pasajeros por id y en general. */
 

@@ -17,6 +17,30 @@ function EmployeesRoutes(server) {
     //-------------------------------------------------//
 
     // 1. -- verify check-in -- //
+    {
+      method: 'POST',
+      path: '/employee/checkIn/',
+      handler: async (request, reply) => {
+        try {
+          const query = {
+            ticketId: request.payload.ticketId,
+            passengerId: request.payload.passengerId
+          };
+          const result = await Tickets.find(
+            {
+              _id: query.ticketId,
+              passenger_id: parseInt(query.passengerId)
+            },
+            {
+              checked: 1
+            }
+          );
+          return reply.response(result);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
 
     // 2. -- passengers info: all and by id --//
     {
