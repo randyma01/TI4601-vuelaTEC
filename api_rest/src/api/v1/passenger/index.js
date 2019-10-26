@@ -94,6 +94,31 @@ function PassengersRoutes(server) {
       }
     },
 
+    {
+      method: 'PUT',
+      path: '/passenger/soldTicket/',
+      handler: async (request, reply) => {
+        try {
+          const query = {
+            flightId: request.payload.flightId
+          };
+          const result = await Flights.update(
+            {
+              _id: query.flightId
+            },
+            {
+              $inc: {
+                ticketsSold: 1
+              }
+            }
+          );
+          return reply.response(result);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
     // 3. -- make check in -- //
     {
       method: 'PUT',

@@ -61,6 +61,16 @@ db.tickets.insert({
   boarded: ''
 });
 
+db.flights.update(
+  {
+    _id: ''
+  },
+  {
+    $inc: {
+      ticketsSold: 1
+    }
+  }
+);
 /* 3. Check-in. */
 
 // filtro: por id de pasajero
