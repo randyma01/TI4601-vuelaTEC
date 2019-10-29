@@ -9,6 +9,7 @@ class Flight extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      dataUser: props.dataUser,
       flight: [],
       idFlight: '',
       idPassenger: '',
@@ -25,14 +26,23 @@ class Flight extends React.Component {
     this.setState({ idFlight: event.target.value })
   }
 
-  _onClickApplyCheckIn = async (ticket, passenger) => {
-    let verify = window.confirm(`Desea aplicar check-in al ticket con código: ${ticket}`);
+  _onClickApplyCheckIn = async (ticketId, amountTickets, passenger) => {
+    let verify = window.confirm(`Desea aplicar check-in al ticket con código: ${ticketId}`);
     if (verify) {
-      let data = {
-        _id: ticket,
-        passenger_id: passenger
+      //TODO Assign seats
+      let seatsTemp = []
+      const chars = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"]
+      for (let i = 0; i < amountTickets; i++) {
+        let randomSeats = [...Array(1)].map(i => chars[Math.random() * chars.length | 0]).join``;
+        let randomSeatsNumber = Math.floor((Math.random() * 100) + 1);
+        seatsTemp.push(randomSeats + randomSeatsNumber)
       }
-      await fetch('http://localhost:3000/passenger/makeCheckIn/{id}',
+      let data = {
+        ticketId: ticketId,
+        passengerId: passenger,
+        seats: seatsTemp
+      }
+      await fetch('http://localhost:3000/passenger/makeCheckIn/',
         {
           method: "PUT",
           body: JSON.stringify(data),
@@ -56,7 +66,11 @@ class Flight extends React.Component {
   _onClickSearchFlight = async () => {
     if (this.state.idFlight === '' || this.state.idPassenger === '') {
       window.confirm("Debe ingresar parametros de busqueda.")
-    } else {
+    }
+    else if (parseInt(this.state.idPassenger) !== parseInt(this.state.dataUser._id)) {
+      window.confirm("La identificación del pasajero no concuerda con su cuenta, verifique.")
+    }
+    else {
       this.setState({
         ticketsToBeCheckin: []
       })
@@ -104,7 +118,7 @@ class Flight extends React.Component {
         <Form>
           <Form.Row style={{ marginTop: '2%' }}>
             <Form.Group as={Col} controlId='formGridPassenher'>
-              <Form.Control type='string' placeholder='Identificador de pasajero' value={this.state.idPassenger} onChange={this._handleChangePassenger.bind(this)} />
+              <Form.Control type='number' placeholder='Identificador de pasajero' value={this.state.idPassenger} onChange={this._handleChangePassenger.bind(this)} />
             </Form.Group>
             <Form.Group as={Col} controlId='formGridFlight'>
               <Form.Control type='string' placeholder='Código de vuelo' value={this.state.idFlight} onChange={this._handleChangeFlight.bind(this)} />
@@ -135,12 +149,12 @@ class Flight extends React.Component {
                 <td>{item.flight_id}</td>
                 <td>{item.passenger_id}</td>
                 <td>{item.amount}</td>
-                <td>{item.baggage}</td>
+                <td>{item.bagagge}</td>
                 <td>{item.dateBought}</td>
                 <td>{JSON.stringify(item.seats)}</td>
                 <td>{item.checked ? ('Chequeado') : 'Sin chequear'}</td>
                 <td>
-                  <IconButton aria-label="apply" style={{ color: 'green' }} onClick={this._onClickApplyCheckIn.bind(this, item._id, item.passenger_id)} disabled={item.boarded}>
+                  <IconButton aria-label="apply" style={{ color: 'green' }} onClick={this._onClickApplyCheckIn.bind(this, item._id, item.amount, item.passenger_id)} disabled={item.checked}>
                     <CheckCircleOutlineIcon />
                   </IconButton>
                 </td>

@@ -11,7 +11,8 @@ class Flight extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      state: ''
+      state: '',
+      dataUser: props.dataUser
     }
   }
 
@@ -20,7 +21,7 @@ class Flight extends React.Component {
       <Container>
         <Tabs style={{ margin: '2%' }} defaultActiveKey="check-in" id="tabs-employee">
           <Tab eventKey="check-in" title="Check-In">
-            <CheckIn />
+            <CheckIn dataUser={this.state.dataUser} />
           </Tab>
           <Tab eventKey="flights" title="Info vuelos" >
             <InfoFlights />

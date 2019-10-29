@@ -8,26 +8,27 @@ class Report extends React.Component {
     super(props);
     this.state = {
       result: [],
+
     };
   }
 
   componentDidMount = async () => {
     this._isMounted = true;
-    await fetch('http://localhost:3000/admin/totalProfitFlights',
-    {
-      method: "GET"
-    })
-    .then(response => response.json())
-    .then(responseJson => {
-      if (responseJson !== '' && this._isMounted) {
-        this.setState({
-          result: responseJson
-        });
-      }
-    })
-    .catch(error => {
-      console.error(error);
-    });
+    await fetch('http://localhost:3000/admin/topThreePassengers/', 
+      {
+        method: "GET"
+      })
+      .then(response => response.json())
+      .then(responseJson => {
+        if (responseJson !== '' && this._isMounted) {
+          this.setState({
+            result: responseJson
+          });
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   componentWillUnmount() {
@@ -37,22 +38,23 @@ class Report extends React.Component {
   render() {
     return (
       <Container>
+        <div style={{ margin: '2%' }}>
+          <h6 align='center'>Pasajeros con más vuelos</h6>
+        </div>
         <div style={{ margin: '5%' }}>
           <Table responsive>
             <thead>
               <tr>
-                <th>Código Aerolinea</th>
-                <th>Boletos Vendidos</th>
-                <th>Monto Total</th>
+                <th>Identificación pasajero</th>
+                <th>Vuelos adquiridos</th>
               </tr>
             </thead>
             <tbody>
               {this.state.result.map((item, index) => (
                 <tr key={index}>
-                  <td>{item._id.airline}</td>
-                  <td>{item._id.ticketsSold}</td>
-                  <td>${item._id.profit}</td>
-                </tr> 
+                  <td>{item._id}</td>
+                  <td>{item.maxQuantity}</td>
+                </tr>
               ))}
             </tbody>
           </Table>

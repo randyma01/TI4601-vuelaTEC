@@ -42,16 +42,15 @@ class Report1 extends React.Component {
       <Container>
         <Form>
           <Form.Row style={{ marginTop: '4%' }}>
-            <Form.Group as={Col} controlId="ControlSelectOrigin" >
+            <Form.Group as={Col} controlId="ControlSelectPassengerId" >
               <Form.Label>Numero de cedula</Form.Label>
               <Form.Control type='number' placeholder='Cedula de pasajero' value={this.state.passengerId} onChange={this._handleChangePassenger.bind(this)} />
             </Form.Group>
-            <Form.Group as={Col} controlId='formGridName'>
+            <Form.Group as={Col} controlId='formGridButtonSearchPassenger'>
               <Button
                 variant='primary'
                 size='lg'
-                onClick={this._submitData}
-              >
+                onClick={this._submitData}>
                 Buscar
                 </Button>
             </Form.Group>

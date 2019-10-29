@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row, Spinner } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
@@ -8,6 +8,7 @@ import SimpleCrypto from 'simple-crypto-js';
 import Menu from '../menu';
 
 class Signup extends React.Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {
@@ -31,13 +32,14 @@ class Signup extends React.Component {
   }
 
   componentDidMount = async () => {
+    this._isMounted = true;
     const countries = await fetch('https://raw.githubusercontent.com/shivammathur/countrycity/master/data/geo.json',
       {
         method: 'GET'
       })
       .then(response => response.json())
       .then(responseJson => {
-        if (responseJson !== '') {
+        if (responseJson !== '' && this._isMounted) {
           return Object.keys(responseJson).sort()
         }
       })
@@ -50,7 +52,7 @@ class Signup extends React.Component {
       })
       .then(response => response.json())
       .then(responseJson => {
-        if (responseJson !== '') {
+        if (responseJson !== '' && this._isMounted) {
           const tempCountries = []
           responseJson.forEach(element => {
             if (countries.includes(element.name)) {
@@ -65,6 +67,10 @@ class Signup extends React.Component {
       .catch(error => {
         console.error(error);
       });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   _handleChangeBirthDay(event) {
@@ -107,7 +113,8 @@ class Signup extends React.Component {
     const item = await JSON.parse(event.target.value.toString())
     this.setState({
       country: item["country"],
-      codeCountry: item["code"]
+      codeCountry: item["code"],
+      isLoadCities: true
     })
     fetch('https://raw.githubusercontent.com/shivammathur/countrycity/master/data/geo.json',
       {
@@ -117,7 +124,8 @@ class Signup extends React.Component {
       .then(responseJson => {
         if (responseJson !== '') {
           this.setState({
-            listCities: responseJson[this.state.country]
+            listCities: responseJson[this.state.country].sort(),
+            isLoadCities: false
           })
         }
       })
@@ -198,6 +206,10 @@ class Signup extends React.Component {
   };
 
   render() {
+    const spinnerCities = this.state.isLoadCities ?
+      (
+        <Spinner animation="grow" />
+      ) : null;
     if (this.state.isCreateAccount) {
       return (
         <Menu dataUser={this.state.user[0]} />
@@ -259,7 +271,7 @@ class Signup extends React.Component {
 
                 <Form.Row>
                   <Form.Group as={Col} controlId='formGridBirthDay'>
-                    <Form.Label>Fecha de Naciemiento</Form.Label>
+                    <Form.Label>Fecha de Nacimiento</Form.Label>
                     <Form.Control type="date" placeholder="dd/mm/yyyy" value={this.state.birthDay} onChange={this._handleChangeBirthDay.bind(this)} />
                   </Form.Group>
                 </Form.Row>
@@ -268,7 +280,8 @@ class Signup extends React.Component {
                 <Form.Row>
                   <Form.Group as={Col} controlId="ControlSelectCountry">
                     <Form.Label>País</Form.Label>
-                    <Form.Control as="select" onChange={this._handleChangeSelectCountry.bind(this)}>
+                    <Form.Control as="select" defaultValue={'DEFAULT'} onChange={this._handleChangeSelectCountry.bind(this)}>
+                      <option value={'DEFAULT'} disabled hidden>Seleccionar un país</option>
                       {this.state.listCountries.map((item, index) => (
                         <option value={'{"country":"' + item.name + '", "code":"' + item.phone_code + '"}'} key={index} >{item.name}</option>
                       ))}
@@ -276,8 +289,9 @@ class Signup extends React.Component {
                   </Form.Group>
 
                   <Form.Group as={Col} controlId="ControlSelectCity">
-                    <Form.Label>Ciudad</Form.Label>
-                    <Form.Control as="select" value={this.state.address} onChange={this._handleChangeSelectCity.bind(this)}>
+                    <Form.Label>Ciudad {spinnerCities}</Form.Label>
+                    <Form.Control as="select" defaultValue={'DEFAULT'} onChange={this._handleChangeSelectCity.bind(this)}>
+                      <option value={'DEFAULT'} disabled hidden>Seleccionar una cuidad</option>
                       {this.state.listCities.map((item, key) => (
                         <option key={key}>{item}</option>
                       ))}

@@ -62,7 +62,7 @@ class Airport extends React.Component {
           if (responseJson !== '') {
             responseJson.map((item) => {
               if (item.name === this.state.airport.country) {
-                this.setState({
+                return this.setState({
                   countryCode: item.phone_code
                 });
               } else {

@@ -6,10 +6,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 import SimpleCrypto from 'simple-crypto-js';
-import Login from '../../session/login';
 import { Redirect } from 'react-router-dom';
 
 class Account extends React.Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {
@@ -35,13 +35,14 @@ class Account extends React.Component {
 
 
   componentDidMount = async () => {
+    this._isMounted = true;
     await fetch(`http://localhost:3000/passenger/myProfile/${this.state.dataUser._id}`,
       {
         method: "GET"
       })
       .then(response => response.json())
       .then(responseJson => {
-        if (responseJson !== '') {
+        if (responseJson !== '' && this._isMounted) {
           this.setState({
             dataUser: responseJson,
             phones: responseJson.phone
@@ -58,7 +59,7 @@ class Account extends React.Component {
       })
       .then(response => response.json())
       .then(responseJson => {
-        if (responseJson !== '') {
+        if (responseJson !== '' && this._isMounted) {
           return Object.keys(responseJson).sort()
         }
       })
@@ -71,7 +72,7 @@ class Account extends React.Component {
       })
       .then(response => response.json())
       .then(responseJson => {
-        if (responseJson !== '') {
+        if (responseJson !== '' && this._isMounted) {
           const tempCountries = []
           responseJson.forEach(element => {
             if (countries.includes(element.name)) {
@@ -86,6 +87,10 @@ class Account extends React.Component {
       .catch(error => {
         console.error(error);
       });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
 
@@ -150,15 +155,26 @@ class Account extends React.Component {
     }
   }
 
-  _onClickDeleteAccount = () => {
+  _onClickDeleteAccount = async () => {
     let verify = window.confirm('Por favor confirme si desea borrar la cuenta');
-    console.log(verify);
-    ///passenger/deleteProfile/{id}
+
     if (verify) {
-      window.location = '/';
-      this.setState({
-        isDeleteAccount: true
-      })
+      await fetch(`http://localhost:3000/passenger/deleteProfile/${this.state.dataUser._id}`,
+        {
+          method: "DELETE"
+        })
+        .then(response => response.json())
+        .then(responseJson => {
+          if (responseJson._id === this.state.dataUser._id) {
+            window.location = '/';
+            this.setState({
+              isDeleteAccount: true
+            })
+          }
+        })
+        .catch(error => {
+          console.error(error);
+        });
     }
     else {
       this.setState({
@@ -283,7 +299,7 @@ class Account extends React.Component {
 
                 <Form.Row>
                   <Form.Group as={Col} controlId='formGridBirthDay'>
-                    <Form.Label>Fecha de Naciemiento</Form.Label>
+                    <Form.Label>Fecha de Nacimiento</Form.Label>
                     <Form.Control type='string' placeholder={this.state.dataUser.birthday} disabled />
                   </Form.Group>
                 </Form.Row>

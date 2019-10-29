@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Refresh from '@material-ui/icons/Refresh';
 
 class Employee  extends React.Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {
@@ -13,13 +14,14 @@ class Employee  extends React.Component {
   }
 
   componentDidMount = async () => {
+    this._isMounted = true;
     await fetch('http://localhost:3000/admin/findAllEmployees/',
       {
         method: "GET"
       })
       .then(response => response.json())
       .then(responseJson => {
-        if (responseJson !== '') {
+        if (responseJson !== '' && this._isMounte) {
           this.setState({
             listEmployees: responseJson
           });
@@ -28,6 +30,10 @@ class Employee  extends React.Component {
       .catch(error => {
         console.error(error);
       });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   _onClickRefreshEmployees = async () => {

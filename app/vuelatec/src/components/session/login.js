@@ -37,10 +37,6 @@ class LogIn extends React.Component {
   };
 
   _submitData = async () => {
-    /*
-    const simpleCrypto = new SimpleCrypto('vtecAPP');
-    console.log(`{ normal: ${this.state.password}, encrypt: ${simpleCrypto.encrypt(this.state.password)}`);
-    */
     if (this.state.password === '' || this.state.userName === '') {
       this.setState({
         messageError: 'Debe ingresar nombre de usuario y contraseña.'

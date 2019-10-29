@@ -32,7 +32,7 @@ class Menu extends React.Component {
     this.state = {
       dataUser: props.dataUser
     };
-  }
+  } 
 
   _optionUser = () => {
     if (this.state.dataUser.role === 'administrator') {
@@ -90,7 +90,6 @@ class Menu extends React.Component {
           <main>
             <Switch>
               <Route path='/' exact component={HomeComponent} />
-              <Route path='/screen2' exact component={() => <AirportComponent  /*userType={this.state.dataUser.type} userId={this.state.dataUser.id} */ />} />
               <Route path='/airports' exact component={() => <AirportComponent />} />
               <Route path='/airlines' exact component={() => <AirlineComponent />} />
               <Route path='/employees' exact component={() => <EmployeeComponent />} />
@@ -98,9 +97,9 @@ class Menu extends React.Component {
               <Route path='/reports' exact component={() => <ReportComponent />} />
               <Route path='/employee/flights' exact component={() => <FlightComponentEmployee />} />
               <Route path='/employee/reports' exact component={() => <ReportComponentEmployee />} />
-              <Route path='/passenger/tickets' exact component={() => <TicketComponentPassenger />} />
+              <Route path='/passenger/tickets' exact component={() => <TicketComponentPassenger dataUser={this.state.dataUser} />} />
               <Route path='/passenger/reports' exact component={() => <ReportComponentPassenger dataUser={this.state.dataUser} />} />
-              <Route path='/passenger/flights' exact component={() => <FlightComponentPassenger />} />
+              <Route path='/passenger/flights' exact component={() => <FlightComponentPassenger dataUser={this.state.dataUser} />} />
               <Route path='/passenger/account' exact component={() => <AccountComponentPassenger dataUser={this.state.dataUser} />} />
               <Route path='/login' exact component={() => <Login />} />
             </Switch>

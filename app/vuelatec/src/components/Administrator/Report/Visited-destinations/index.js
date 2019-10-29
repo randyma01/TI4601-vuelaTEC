@@ -3,6 +3,7 @@ import { Container, Table } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Report extends React.Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {
@@ -10,14 +11,15 @@ class Report extends React.Component {
     };
   }
 
-  componentDidUpdate = async () => {
-    await fetch('http://localhost:3000/admin/mostVisitedDestinations/',
+  componentDidMount = async () => {
+    this._isMounted = true;
+    await fetch('http://localhost:3000/admin/mostVisited/',
       {
         method: "GET"
       })
       .then(response => response.json())
       .then(responseJson => {
-        if (responseJson !== '') {
+        if (responseJson !== '' && this._isMounted) {
           this.setState({
             result: responseJson
           });
@@ -28,20 +30,19 @@ class Report extends React.Component {
       });
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   render() {
     return (
       <Container>
-        <div style={{ margin: '2%' }}>
-          <h6 align='center'>Reportes Admin - ¿Cuáles son las destinos más visitados? Se debe mostrar el nombre
-de cada destino y la cantidad de pasajero que han comprado vuelos
-para ese destino. </h6>
-        </div>
         <div style={{ margin: '5%' }}>
           <Table responsive>
             <thead>
               <tr>
                 <th>Destino</th>
-                <th>Cantidad vuelos comprados</th>
+                <th>Cantidad de pasajeros con boleto</th>
               </tr>
             </thead>
             <tbody>

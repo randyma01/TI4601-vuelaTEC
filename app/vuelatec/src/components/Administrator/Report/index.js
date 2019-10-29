@@ -6,6 +6,7 @@ import Report1 from './Profit-flights';
 import Report2 from './Tickets-passenger';
 import Report3 from './Visited-destinations';
 import Report4 from './Amount-ticket';
+import Report5 from './Passenger-tickets-purchased';
 
 class Report extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class Report extends React.Component {
     return (
       <Container>
         <div style={{ margin: '2%' }}>
-          <h3 align='center'>Reportes Administrativos</h3>
+          <h5 align='center'>Reportes Administrativos</h5>
         </div>
         <Tabs defaultActiveKey="report1" id="uncontrolled-tab-example">
           <Tab eventKey="report1" title="Ganancia Total de Vuelos">
@@ -33,6 +34,9 @@ class Report extends React.Component {
           </Tab>
           <Tab eventKey="report4" title="Boletos Registrados en el Sistema" >
             <Report4 />
+          </Tab>
+          <Tab eventKey="report5" title="Top 3 Pasajeros" >
+            <Report5 />
           </Tab>
         </Tabs>
       </Container>

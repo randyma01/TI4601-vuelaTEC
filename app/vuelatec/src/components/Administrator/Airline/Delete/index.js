@@ -6,6 +6,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Refresh from '@material-ui/icons/Refresh';
 
 class Airline extends React.Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -14,13 +16,15 @@ class Airline extends React.Component {
   }
 
   componentDidMount = async () => {
+    this._isMounted = true;
+
     await fetch('http://localhost:3000/admin/findAllAirlines/',
       {
         method: "GET"
       })
       .then(response => response.json())
       .then(responseJson => {
-        if (responseJson !== '') {
+        if (responseJson !== '' && this._isMounted) {
           this.setState({
             listAirlines: responseJson
           });
@@ -29,6 +33,10 @@ class Airline extends React.Component {
       .catch(error => {
         console.error(error);
       });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   _onClickDeleteAirline(id) {

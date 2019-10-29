@@ -11,6 +11,7 @@ import UpdateFlight from './Update';
 
 
 class Flight extends React.Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {
@@ -40,13 +41,14 @@ class Flight extends React.Component {
   }
 
   componentDidMount = async () => {
+    this._isMounted = true;
     await fetch('http://localhost:3000/admin/findAllAirlines/',
       {
         method: "GET"
       })
       .then(response => response.json())
       .then(responseJson => {
-        if (responseJson !== '') {
+        if (responseJson !== '' && this._isMounted) {
           this.setState({
             listAirlines: responseJson
           });
@@ -55,6 +57,10 @@ class Flight extends React.Component {
       .catch(error => {
         console.error(error);
       });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   _handleChangeArrive(event) {
@@ -120,7 +126,7 @@ class Flight extends React.Component {
       .then(responseGeoJson => {
         if (responseGeoJson !== '') {
           this.setState({
-            listCitiesDestination: responseGeoJson[this.state.destinationCountry],
+            listCitiesDestination: responseGeoJson[this.state.destinationCountry].sort(),
             isLoadCitiesDestination: false
           })
         }
@@ -149,7 +155,7 @@ class Flight extends React.Component {
       .then(responseGeoJson => {
         if (responseGeoJson !== '') {
           this.setState({
-            listCitiesOrigin: responseGeoJson[this.state.originCountry],
+            listCitiesOrigin: responseGeoJson[this.state.originCountry].sort(),
             isLoadCitiesOrigin: false
           })
         }

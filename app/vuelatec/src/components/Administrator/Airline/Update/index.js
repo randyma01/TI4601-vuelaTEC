@@ -7,6 +7,8 @@ import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
 
 class Airline extends React.Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -20,13 +22,14 @@ class Airline extends React.Component {
   }
 
   componentDidMount = async () => {
+    this._isMounted = true;
     const countries = await fetch('https://raw.githubusercontent.com/shivammathur/countrycity/master/data/geo.json',
       {
         method: 'GET'
       })
       .then(response => response.json())
       .then(responseJson => {
-        if (responseJson !== '') {
+        if (responseJson !== '' && this._isMounted) {
           return Object.keys(responseJson).sort()
         }
       })
@@ -39,7 +42,7 @@ class Airline extends React.Component {
       })
       .then(response => response.json())
       .then(responseJson => {
-        if (responseJson !== '') {
+        if (responseJson !== ''&& this._isMounted) {
           const tempCountries = []
           responseJson.forEach(element => {
             if (countries.includes(element.name)) {
@@ -54,6 +57,10 @@ class Airline extends React.Component {
       .catch(error => {
         console.error(error);
       });
+  }
+  
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   _handleChangeCode(event) {

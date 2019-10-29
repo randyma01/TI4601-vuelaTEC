@@ -6,6 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Refresh from '@material-ui/icons/Refresh';
 
 class Airport extends React.Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {
@@ -14,13 +15,14 @@ class Airport extends React.Component {
   }
 
   componentDidMount = async () => {
+    this._isMounted = true;
     await fetch('http://localhost:3000/admin/findAllAirports/',
       {
         method: "GET"
       })
       .then(response => response.json())
       .then(responseJson => {
-        if (responseJson !== '') {
+        if (responseJson !== '' && this._isMounted) {
           this.setState({
             listAirports: responseJson
           });
@@ -29,6 +31,10 @@ class Airport extends React.Component {
       .catch(error => {
         console.error(error);
       });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   _onClickDeleteAirport(id) {

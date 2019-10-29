@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Container, Form, Row, Tab, Tabs } from 'react-bootstrap';
+import { Button, Col, Container, Form, Row, Spinner, Tab, Tabs } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 /*Tabs*/
@@ -8,6 +8,7 @@ import ReadAirport from './Read';
 import UpdateAirport from './Update';
 
 class Airport extends React.Component {
+  _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {
@@ -24,13 +25,14 @@ class Airport extends React.Component {
   }
 
   componentDidMount = async () => {
+    this._isMounted = true;
     const countries = await fetch('https://raw.githubusercontent.com/shivammathur/countrycity/master/data/geo.json',
       {
         method: 'GET'
       })
       .then(response => response.json())
       .then(responseJson => {
-        if (responseJson !== '') {
+        if (responseJson !== '' && this._isMounted) {
           return Object.keys(responseJson).sort()
         }
       })
@@ -43,7 +45,7 @@ class Airport extends React.Component {
       })
       .then(response => response.json())
       .then(responseJson => {
-        if (responseJson !== '') {
+        if (responseJson !== '' && this._isMounted) {
           const tempCountries = []
           responseJson.forEach(element => {
             if (countries.includes(element.name)) {
@@ -58,7 +60,10 @@ class Airport extends React.Component {
       .catch(error => {
         console.error(error);
       });
+  }
 
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   _handleChangeCode(event) {
@@ -85,7 +90,8 @@ class Airport extends React.Component {
     const item = await JSON.parse(event.target.value.toString())
     this.setState({
       country: item["country"],
-      countryCode: item["code"]
+      countryCode: item["code"],
+      isLoadCities: true
     })
 
     fetch('https://raw.githubusercontent.com/shivammathur/countrycity/master/data/geo.json',
@@ -96,7 +102,8 @@ class Airport extends React.Component {
       .then(responseJson => {
         if (responseJson !== '') {
           this.setState({
-            listCities: responseJson[this.state.country]
+            listCities: responseJson[this.state.country].sort(),
+            isLoadCities: false
           })
         }
       })
@@ -146,6 +153,10 @@ class Airport extends React.Component {
   };
 
   render() {
+    const spinnerCities = this.state.isLoadCities ?
+      (
+        <Spinner animation="grow" />
+      ) : null;
     return (
       <Container>
         <Tabs defaultActiveKey="create" id="uncontrolled-tab-example">
@@ -181,7 +192,7 @@ class Airport extends React.Component {
                     </Form.Group>
 
                     <Form.Group as={Col} controlId="ControlSelectCity">
-                      <Form.Label>Ciudad</Form.Label>
+                      <Form.Label>Ciudad {spinnerCities}</Form.Label>
                       <Form.Control as="select" defaultValue={'DEFAULT'} value={this.state.address} onChange={this._handleChangeSelectCity.bind(this)}>
                         <option value={'DEFAULT'} disabled hidden>Seleccionar una ciudad</option>
                         {this.state.listCities.map((item, key) => (
