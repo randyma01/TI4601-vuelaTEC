@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import administratorRoutes from '../src/api/v1/administrator/index';
 import employeesRoutes from '../src/api/v1/employees/index';
 import passengerRoutes from '../src/api/v1/passenger/index';
-import testRoutes from '../src/api/v1/test';
 
 const init = async () => {
   const server = hapi.server({
@@ -24,7 +23,6 @@ const init = async () => {
     administratorRoutes(server);
     employeesRoutes(server);
     passengerRoutes(server);
-    testRoutes(server);
 
     await server.start();
   } catch (err) {
