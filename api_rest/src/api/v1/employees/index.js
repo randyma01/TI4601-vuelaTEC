@@ -93,6 +93,19 @@ function EmployeesRoutes(server) {
       }
     },
 
+    {
+      method: 'GET',
+      path: '/employee/allTickets/',
+      handler: async (request, reply) => {
+        try {
+          const result = await Tickets.find();
+          return reply.response(result);
+        } catch (error) {
+          return reply.response(error).code(500);
+        }
+      }
+    },
+
     // 3. -- boarding pass -- //
     {
       method: 'PUT',

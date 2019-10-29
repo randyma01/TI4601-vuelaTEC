@@ -20,7 +20,7 @@ db.airports.insert({
 db.airports.insert({
   _id: 'LHR',
   name: 'Heathrow',
-  city: 'Greater London',
+  city: 'London',
   country: 'United Kingdom',
   number: '(+44) 844 335 1801',
   webPage: 'https://www.heathrow.com/'
@@ -29,7 +29,7 @@ db.airports.insert({
 db.airports.insert({
   _id: 'FRA',
   name: 'Frankfurt',
-  city: 'Frankfurt',
+  city: 'Frankfurt (Order)',
   country: 'Germany',
   number: '(+49) 180 6372 4636',
   webPage: 'https://www.frankfurt-airport.com/'
@@ -39,7 +39,7 @@ db.airports.insert({
   _id: 'CAI',
   name: 'El Cairo',
   city: 'Cairo',
-  country: 'Egipt',
+  country: 'Egypt',
   number: '(+20) 2265 5000',
   webPage: 'https://www.cairo-airport.com/'
 });
@@ -47,7 +47,7 @@ db.airports.insert({
 db.airports.insert({
   _id: 'HND',
   name: 'Haneda',
-  city: 'Tokio',
+  city: 'Tokyo',
   country: 'Japan',
   number: '(+81) (03) 6428 0888',
   webPage: 'http://www.tokyo-airport-bldg.co.jp'
@@ -57,7 +57,7 @@ db.airports.insert({
   _id: 'GIG',
   name: 'Galeão',
   city: 'Rio de Janeiro',
-  country: 'Brasil',
+  country: 'Brazil',
   number: '(+55) 21 3398 4526',
   webPage: ''
 });

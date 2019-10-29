@@ -11,7 +11,7 @@ db.createCollection('tickets');
 db.tickets.insert({
   _id: 'ktl123',
   amount: 1,
-  seats: ['D02'],
+  seats: [],
   baggage: 1,
   carryOn: 2,
   flight_id: 'AA4573',
@@ -24,7 +24,7 @@ db.tickets.insert({
 db.tickets.insert({
   _id: 'sht123',
   amount: 5,
-  seats: ['A01', 'A02', 'A03', 'B01', 'B02'],
+  seats: [],
   baggage: 5,
   carryOn: 2,
   flight_id: 'AA4573',
@@ -43,7 +43,7 @@ db.tickets.insert({
   carryOn: 3,
   flight_id: 'AA4573',
   passenger_id: 157483924,
-  checked: false,
+  checked: true,
   boarded: false,
   dateBought: '2019-15-03'
 });
@@ -56,8 +56,8 @@ db.tickets.insert({
   carryOn: 1,
   flight_id: 'AA4573',
   passenger_id: 157483924,
-  checked: false,
-  boarded: false,
+  checked: true,
+  boarded: true,
   dateBought: '2019-18-06'
 });
 
@@ -69,7 +69,7 @@ db.tickets.insert({
   carryOn: 2,
   flight_id: 'DU1289',
   passenger_id: 157483924,
-  checked: false,
+  checked: true,
   boarded: false,
   dateBought: '2019-12-12'
 });

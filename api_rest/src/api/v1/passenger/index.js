@@ -85,7 +85,7 @@ function PassengersRoutes(server) {
       path: '/passenger/buyTicket/',
       handler: async (request, reply) => {
         try {
-          const newTicket = new Ticket(request.payload);
+          const newTicket = new Tickets(request.payload);
           const result = await newTicket.save();
           return reply.response(result);
         } catch (error) {
@@ -127,7 +127,8 @@ function PassengersRoutes(server) {
         try {
           const query = {
             ticketId: request.payload.ticketId,
-            passengerId: request.payload.passengerId
+            passengerId: request.payload.passengerId,
+            seats: request.payload.seats
           };
 
           const result = await Tickets.update(
@@ -137,7 +138,8 @@ function PassengersRoutes(server) {
             },
             {
               $set: {
-                checked: true
+                checked: true,
+                seats: query.seats
               }
             }
           );
@@ -249,7 +251,7 @@ function PassengersRoutes(server) {
         try {
           const { origin1, destination1, date1, date2 } = request.payload;
 
-          const result = await Passengers.find({
+          const result = await Flights.find({
             origin: origin1,
             destination: destination1,
             takeOff: {

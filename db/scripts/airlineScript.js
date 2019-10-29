@@ -15,7 +15,7 @@ db.airlines.insert({
   countries: [
     'Australia',
     'Aruba',
-    'Brasil',
+    'Brazil',
     'United Arab Emirates',
     'Costa Rica',
     'Egypt',
@@ -32,7 +32,7 @@ db.airlines.insert({
   name: 'Lufthansa',
   countries: [
     'Australia',
-    'Brasil',
+    'Brazil',
     'United Arab Emirates',
     'Costa Rica',
     'Egypt',
@@ -50,7 +50,7 @@ db.airlines.insert({
   countries: [
     'Australia',
     'Aruba',
-    'Brasil',
+    'Brazil',
     'United Arab Emirates',
     'Costa Rica',
     'Egypt',
@@ -67,7 +67,7 @@ db.airlines.insert({
   name: 'Emirates',
   countries: [
     'Australia',
-    'Brasil',
+    'Brazil',
     'United Arab Emirates',
     'Egypt',
     'United Kingdom',
@@ -82,7 +82,7 @@ db.airlines.insert({
   _id: 'JBU',
   name: 'JetBlue',
   countries: [
-    'Brasil',
+    'Brazil',
     'Costa Rica',
     'United Kingdom',
     'United States',

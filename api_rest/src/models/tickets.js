@@ -8,6 +8,7 @@ const TicketSchema = new Schema({
   seats: [String],
   bagagge: Number,
   carryOn: Number,
+  dateBought: String,
   flight_id: String,
   passenger_id: Number,
   checked: Boolean,
